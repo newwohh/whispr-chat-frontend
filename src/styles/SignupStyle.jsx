@@ -1,13 +1,14 @@
 import { makeStyles } from "@mui/styles";
 
-const useLoginStyles = makeStyles({
-  logininputcontainer: {
+const useSignupStyles = makeStyles({
+  signupinputcontainer: {
     padding: "50px",
     width: "500px",
-    height: "450px",
+    height: "500px",
     backgroundColor: "white",
     borderRadius: "40px",
+    textAlign: "center",
   },
 });
 
-export default useLoginStyles;
+export default useSignupStyles;
