@@ -1,7 +1,7 @@
 import { Button, Divider, TextField, Typography } from "@mui/material";
 import React from "react";
 import useSignupStyles from "../../styles/SignupStyle";
-// import "./signup.css";
+import Background from "../Background/Background";
 
 function SignUpMain() {
   const [isOpen, setOpen] = React.useState(false);
@@ -10,6 +10,7 @@ function SignUpMain() {
   return (
     <>
       <div>
+        <Background />
         <div className={SignUpStyleClass.signupinputcontainer}>
           <div>
             <Typography variant="h4" gutterBottom>

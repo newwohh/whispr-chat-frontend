@@ -1,7 +1,11 @@
 body {
-  background: #3399ff;
+  background-image: radial-gradient(
+    circle 248px at center,
+    #16d9e3 0%,
+    #30c7ec 47%,
+    #46aef7 100%
+  );
 }
-
 .circle {
   position: absolute;
   border-radius: 50%;
