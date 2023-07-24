@@ -25,7 +25,7 @@ To run Whispr Chat locally, follow these steps:
    ```
 2. Change to the project directory:
    ```
-   cd whispr-chat-frontend
+   cd src
    ```
 3. Install the dependencies:
    ```
