@@ -4,10 +4,13 @@ import { motion } from "framer-motion";
 import LandingNavbar from "./LandingNavbar";
 import FooterComponents from "../Footer/FooterComponents";
 import chatpeoplelanding from "../../assets/hero-landing-1.jpg";
+import Background from "../Background/Background";
 
 function LandingMain() {
   return (
     <React.Fragment>
+      <Background />
+
       <div
         style={{
           display: "flex",
@@ -91,7 +94,10 @@ function LandingMain() {
                   marginLeft: "10px",
                 }}
               >
-                <Chip label="Connect with friends." color="primary" />
+                <Chip
+                  label="Connect with friends."
+                  sx={{ backgroundColor: "white" }}
+                />
               </motion.div>
               <img
                 src={chatpeoplelanding}
@@ -112,7 +118,10 @@ function LandingMain() {
                   marginTop: "10px",
                 }}
               >
-                <Chip label="Connect with family" color="primary" />
+                <Chip
+                  label="Connect with family"
+                  sx={{ backgroundColor: "white" }}
+                />
               </motion.div>
             </motion.div>
           </div>

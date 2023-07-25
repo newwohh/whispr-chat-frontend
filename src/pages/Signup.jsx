@@ -1,12 +1,16 @@
 import React from "react";
 import SignUpMain from "../components/SignUp/SignUpMain";
 import { titleHandler } from "../actions/actions";
+import { motion } from "framer-motion";
 
 function Signup() {
   titleHandler("Signup");
 
   return (
-    <main
+    <motion.div
+      initial={{ width: 0 }}
+      animate={{ width: "100%" }}
+      exit={{ x: -window.innerWidth }}
       style={{
         display: "flex",
         justifyContent: "center",
@@ -17,7 +21,7 @@ function Signup() {
       }}
     >
       <SignUpMain />
-    </main>
+    </motion.div>
   );
 }
 

@@ -2,6 +2,7 @@ import { Button, Divider, TextField, Typography } from "@mui/material";
 import React from "react";
 import useSignupStyles from "../../styles/SignupStyle";
 import Background from "../Background/Background";
+import { motion } from "framer-motion";
 
 function SignUpMain() {
   const [isOpen, setOpen] = React.useState(false);
@@ -12,7 +13,11 @@ function SignUpMain() {
       <div>
         <Background />
         <div className={SignUpStyleClass.signupinputcontainer}>
-          <div>
+          <motion.div
+            initial={{ scale: 0.5 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.2 }}
+          >
             <Typography variant="h4" gutterBottom>
               Sign Up
             </Typography>
@@ -40,7 +45,7 @@ function SignUpMain() {
               placeholder="Type your password"
               sx={{ width: "350px", marginTop: "30px" }}
             />
-          </div>
+          </motion.div>
           <div>
             <Button
               sx={{

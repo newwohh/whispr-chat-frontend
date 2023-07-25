@@ -3,10 +3,22 @@ import { Button, Link, TextField, Typography } from "@mui/material";
 import useLoginStyles from "../../styles/LoginStyle";
 import { motion } from "framer-motion";
 import Background from "../Background/Background";
+import { useNavigate } from "react-router-dom";
 
 function LoginMain() {
   const [isOpen, setOpen] = React.useState(false);
   const LoginStyleClass = useLoginStyles();
+  const navigation = useNavigate(0);
+  const navigateTo = () => {
+    return navigation("/chat");
+  };
+
+  const directTo = () => {
+    if (2 - 1 === 1) {
+      setOpen(!isOpen);
+      setTimeout(navigateTo, 3000);
+    }
+  };
 
   return (
     <>
@@ -29,7 +41,11 @@ function LoginMain() {
           {isOpen ? (
             ""
           ) : (
-            <div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
               <Typography
                 variant="h3"
                 sx={{ fontFamily: "Courier New" }}
@@ -67,15 +83,17 @@ function LoginMain() {
                     backgroundImage:
                       "radial-gradient(circle 248px at center, #16d9e3 0%, #30c7ec 47%, #46aef7 100%);",
                   }}
-                  onClick={() => setOpen(!isOpen)}
+                  onClick={() => directTo()}
                 >
                   Submit
                 </Button>
               </div>
-              <div>
-                <Link href="/signup">Not a member? Click here to SignUp</Link>
+              <div style={{ zIndex: 1 }}>
+                <Link underline="hover" href="/signup" style={{ zIndex: 1 }}>
+                  Not a member? Click here to SignUp
+                </Link>
               </div>
-            </div>
+            </motion.div>
           )}
         </motion.div>
       </main>

@@ -1,17 +1,10 @@
 import React from "react";
-import Login from "./pages/Login";
-import { Route, Routes } from "react-router-dom";
-import Signup from "./pages/Signup";
-import Landing from "./pages/Landing";
+import Routes from "./routes/Routes";
 
 function App() {
   return (
     <React.Fragment>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="login" element={<Login />} />
-        <Route path="signup" element={<Signup />} />
-      </Routes>
+      <Routes />
     </React.Fragment>
   );
 }
