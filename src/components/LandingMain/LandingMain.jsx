@@ -1,7 +1,8 @@
 import React from "react";
-import { Button, Typography } from "@mui/material";
+import { Button, Chip, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import LandingNavbar from "./LandingNavbar";
+import FooterComponents from "../Footer/FooterComponents";
 import chatpeoplelanding from "../../assets/hero-landing-1.jpg";
 
 function LandingMain() {
@@ -29,9 +30,9 @@ function LandingMain() {
           </div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <motion.div
-              initial={{ x: -200 }}
+              initial={{ x: -100 }}
               animate={{ x: 0 }}
-              transition={{ duration: 1.5 }}
+              transition={{ duration: 1 }}
               style={{
                 width: "500px",
                 marginTop: "40px",
@@ -74,11 +75,24 @@ function LandingMain() {
               </motion.div>
             </motion.div>
             <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 1 }}
-              style={{ width: "500px", marginTop: "40px" }}
+              style={{
+                width: "500px",
+                marginTop: "40px",
+                display: "flex",
+                justifyContent: "flex-start",
+              }}
             >
+              <motion.div
+                initial={{ x: -100 }}
+                animate={{ x: 0 }}
+                style={{
+                  marginTop: "550px",
+                  position: "absolute",
+                  marginLeft: "10px",
+                }}
+              >
+                <Chip label="Connect with friends." color="primary" />
+              </motion.div>
               <img
                 src={chatpeoplelanding}
                 alt="hero"
@@ -89,9 +103,21 @@ function LandingMain() {
                   marginRight: "-50px",
                 }}
               />
+              <motion.div
+                initial={{ x: 100 }}
+                animate={{ x: 0 }}
+                style={{
+                  position: "absolute",
+                  marginLeft: "250px",
+                  marginTop: "10px",
+                }}
+              >
+                <Chip label="Connect with family" color="primary" />
+              </motion.div>
             </motion.div>
           </div>
         </div>
+        <FooterComponents />
       </div>
     </React.Fragment>
   );

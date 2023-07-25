@@ -5,7 +5,10 @@ import { motion } from "framer-motion";
 
 function LandingNavbar() {
   return (
-    <div
+    <motion.div
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 1 }}
       style={{
         display: "flex",
         alignItems: "center",
@@ -28,11 +31,7 @@ function LandingNavbar() {
         <Typography sx={{ color: "white", fontWeight: 600 }}>Whispr</Typography>
       </div>
       <div>
-        <motion.nav
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 2 }}
-        >
+        <nav>
           <Button
             href="/login"
             variant="outlined"
@@ -63,9 +62,9 @@ function LandingNavbar() {
           >
             About
           </Button>
-        </motion.nav>
+        </nav>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
