@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import LandingNavbar from "./LandingNavbar";
+import chatpeoplelanding from "../../assets/hero-landing-1.jpg";
 
 function LandingMain() {
   return (
@@ -26,11 +27,11 @@ function LandingMain() {
           <div>
             <LandingNavbar />
           </div>
-          <div>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
             <motion.div
               initial={{ x: -200 }}
               animate={{ x: 0 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 1.5 }}
               style={{
                 width: "500px",
                 marginTop: "40px",
@@ -43,7 +44,7 @@ function LandingMain() {
                 sx={{
                   fontFamily: "Helvetica",
                   color: "white",
-                  fontWeight: 1000,
+                  fontWeight: 800,
                 }}
               >
                 Connect and communicate seamlessly with friends and loved ones
@@ -72,8 +73,24 @@ function LandingMain() {
                 </Button>
               </motion.div>
             </motion.div>
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 1 }}
+              style={{ width: "500px", marginTop: "40px" }}
+            >
+              <img
+                src={chatpeoplelanding}
+                alt="hero"
+                style={{
+                  borderRadius: "30px",
+                  height: "600px",
+                  width: "400px",
+                  marginRight: "-50px",
+                }}
+              />
+            </motion.div>
           </div>
-          <div style={{ width: "500px" }}></div>
         </div>
       </div>
     </React.Fragment>

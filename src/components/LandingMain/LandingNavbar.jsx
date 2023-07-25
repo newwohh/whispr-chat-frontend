@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "../../assets/diamond.png";
 import { Button, Typography } from "@mui/material";
+import { motion } from "framer-motion";
 
 function LandingNavbar() {
   return (
@@ -27,7 +28,11 @@ function LandingNavbar() {
         <Typography sx={{ color: "white", fontWeight: 600 }}>Whispr</Typography>
       </div>
       <div>
-        <nav>
+        <motion.nav
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2 }}
+        >
           <Button
             href="/login"
             variant="outlined"
@@ -58,7 +63,7 @@ function LandingNavbar() {
           >
             About
           </Button>
-        </nav>
+        </motion.nav>
       </div>
     </div>
   );

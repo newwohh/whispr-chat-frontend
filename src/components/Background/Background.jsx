@@ -3,7 +3,7 @@ import "../../styles/Background/Background.css";
 
 function Background() {
   return (
-    <div>
+    <div style={{ height: "0vh" }}>
       <div className="ripple-background">
         <div className="circle xxlarge shade1"></div>
         <div className="circle xlarge shade2"></div>
