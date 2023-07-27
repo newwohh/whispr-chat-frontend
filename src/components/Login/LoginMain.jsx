@@ -4,7 +4,8 @@ import useLoginStyles from "../../styles/LoginStyle";
 import { motion } from "framer-motion";
 import Background from "../Background/Background";
 import { useNavigate } from "react-router-dom";
-import { loginHandler } from "../../handlers/LoginHandler";
+import { backendBaseUrl } from "../../constants/constants";
+import { setUserLocally } from "../../handlers/setLocalStorage";
 
 function LoginMain() {
   const [isOpen, setOpen] = React.useState(false);
@@ -14,13 +15,32 @@ function LoginMain() {
   const navigateTo = () => {
     return navigation("/chat");
   };
+  let user;
 
-  const directTo = () => {
-    loginHandler(credentials.email, credentials.password);
-    // if (2 - 1 === 1) {
-    //   setOpen(!isOpen);
-    //   setTimeout(navigateTo, 3000);
-    // }
+  const loginHandler = async (email, password) => {
+    try {
+      const request = await fetch(backendBaseUrl + "/api/login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+        credentials: "include",
+      });
+      const response = await request.json();
+      user = response;
+      console.log(user);
+      setUserLocally(user);
+      if (user.msg === "login success") {
+        setOpen(!isOpen);
+        setTimeout(navigateTo, 3000);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -88,7 +108,9 @@ function LoginMain() {
                     backgroundImage:
                       "radial-gradient(circle 248px at center, #16d9e3 0%, #30c7ec 47%, #46aef7 100%);",
                   }}
-                  onClick={() => directTo()}
+                  onClick={() =>
+                    loginHandler(credentials.email, credentials.password)
+                  }
                 >
                   Submit
                 </Button>

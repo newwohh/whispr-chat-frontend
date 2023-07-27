@@ -13,16 +13,13 @@ import img from "../../assets/hero-landing-3.jpg";
 import { ChatsContext } from "../../context/ChatContext";
 
 function Chats() {
-  const { setUser } = useContext(ChatsContext);
-
-  const setName = (num) => {
-    if (num % 2 === 0) {
-      return setUser("full");
-    } else {
-      return setUser("name");
-    }
-  };
-
+  const { user } = useContext(ChatsContext);
+  let name;
+  if (user === undefined) {
+    name = "wait";
+  } else {
+    name = user.user.name;
+  }
   return (
     <div>
       <div
@@ -39,7 +36,7 @@ function Chats() {
           alt="profile"
           style={{ height: "180px", width: "180px", borderRadius: "50%" }}
         />
-        <Typography sx={{ marginTop: "15px" }}>Full Name</Typography>
+        <Typography sx={{ marginTop: "15px" }}>{user.user.name}</Typography>
         <ListItemText
           secondary="@username"
           sx={{ marginTop: "5px", marginBottom: "10px" }}
@@ -58,7 +55,7 @@ function Chats() {
           {[1, 2, 3, 4].map((el, i) => {
             return (
               <ListItem key={i} alignItems="flex-start">
-                <ListItemButton onClick={() => setName(i)}>
+                <ListItemButton>
                   <ListItemAvatar>
                     <Avatar
                       alt="Remy Sharp"
