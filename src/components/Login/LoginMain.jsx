@@ -4,20 +4,23 @@ import useLoginStyles from "../../styles/LoginStyle";
 import { motion } from "framer-motion";
 import Background from "../Background/Background";
 import { useNavigate } from "react-router-dom";
+import { loginHandler } from "../../handlers/LoginHandler";
 
 function LoginMain() {
   const [isOpen, setOpen] = React.useState(false);
   const LoginStyleClass = useLoginStyles();
   const navigation = useNavigate(0);
+  let credentials = { email: "", password: "" };
   const navigateTo = () => {
     return navigation("/chat");
   };
 
   const directTo = () => {
-    if (2 - 1 === 1) {
-      setOpen(!isOpen);
-      setTimeout(navigateTo, 3000);
-    }
+    loginHandler(credentials.email, credentials.password);
+    // if (2 - 1 === 1) {
+    //   setOpen(!isOpen);
+    //   setTimeout(navigateTo, 3000);
+    // }
   };
 
   return (
@@ -63,12 +66,14 @@ function LoginMain() {
                   id="outlined-size-normal"
                   placeholder="Type your username"
                   sx={{ width: "350px", marginTop: "30px" }}
+                  onChange={(e) => (credentials.email = e.target.value)}
                 />
                 <TextField
                   label="Password"
                   id="outlined-size-normal"
                   placeholder="Type your password"
                   sx={{ width: "350px", marginTop: "30px" }}
+                  onChange={(e) => (credentials.password = e.target.value)}
                 />
               </div>
               <div>

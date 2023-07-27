@@ -9,7 +9,7 @@ function Landing() {
     <motion.div
       initial={{ x: 0 }}
       animate={{ x: 0 }}
-      exit={{ x: -100 }}
+      exit={{ x: -200 }}
       transition={{ duration: 1 }}
     >
       <div

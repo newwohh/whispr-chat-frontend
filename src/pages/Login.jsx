@@ -7,7 +7,7 @@ function Login() {
   titleHandler("Login");
   return (
     <motion.div
-      initial={{ x: 100 }}
+      initial={{ x: 300 }}
       animate={{ x: 0 }}
       transition={{ duration: 1 }}
       style={{
