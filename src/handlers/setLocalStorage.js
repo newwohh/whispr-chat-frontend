@@ -4,8 +4,8 @@ export const setUserLocally = (user) => {
   }
 };
 
-export const getToken = () => {
-  let name = JSON.parse(localStorage.getItem("user"));
-  console.log(name);
-  return name;
+export const removeUserLocally = (user) => {
+  if (user) {
+    localStorage.removeItem("user");
+  }
 };

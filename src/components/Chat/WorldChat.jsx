@@ -16,7 +16,6 @@ function WorldChat() {
 
     const channel = pusher.subscribe("whispr");
     channel.bind("message", function (data) {
-      console.log(data);
       allMessages.push(data);
       return setMessages(allMessages);
     });

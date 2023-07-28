@@ -8,65 +8,104 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import React, { useContext } from "react";
-import img from "../../assets/hero-landing-3.jpg";
+import React, { useContext, useEffect, useState } from "react";
 import { ChatsContext } from "../../context/ChatContext";
+import { UserContext } from "../../context/UserContext";
+import { db } from "../../config/firebase";
+import { getDoc, setDoc, doc, onSnapshot } from "firebase/firestore";
+import LongMenu from "./Menu";
+import useChatsStyle from "../../styles/Chats";
 
 function Chats() {
+  const ChatsClass = useChatsStyle();
+  const [messages, setMessages] = useState([]);
   const { user } = useContext(ChatsContext);
-  let name;
+  const { selectedUser, setSelectedUser } = useContext(UserContext);
+
+  let allUsers;
   if (user === undefined) {
-    name = "wait";
+    allUsers = ["loading", "loading", "loading", "loading", "loading"];
   } else {
-    name = user.user.name;
+    allUsers = user.users;
   }
+
+  useEffect(() => {
+    if (selectedUser === "" || selectedUser === undefined) {
+      return;
+    } else {
+      const unsub = onSnapshot(doc(db, "chats", selectedUser), (doc) => {
+        doc.exists() && setMessages(doc.data().messages);
+      });
+
+      return () => {
+        unsub();
+      };
+    }
+  }, [selectedUser]);
+
+  const handleSelect = async (name) => {
+    const twovtwochat = user.user.name + name;
+    let userSelected = twovtwochat.split("").sort().join("");
+
+    setSelectedUser(userSelected);
+    try {
+      const res = await getDoc(doc(db, "chats", userSelected));
+      if (!res.exists()) {
+        await setDoc(doc(db, "chats", userSelected), { messages: [] });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  let lastMessage =
+    messages[messages.length - 1] === undefined
+      ? "select a chat"
+      : messages[messages.length - 1].text;
   return (
     <div>
-      <div
-        style={{
-          textAlign: "center",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-        }}
-      >
-        <img
-          src={img}
-          alt="profile"
-          style={{ height: "180px", width: "180px", borderRadius: "50%" }}
-        />
+      <div className={ChatsClass.profilediv}>
+        <Avatar
+          sx={{
+            height: "180px",
+            width: "180px",
+            borderRadius: "50%",
+            fontSize: "75px",
+          }}
+        >
+          {user.user.name[0].toUpperCase()}
+        </Avatar>
         <Typography sx={{ marginTop: "15px" }}>{user.user.name}</Typography>
         <ListItemText
-          secondary="@username"
+          secondary={"@" + user.user.name + user.user.id}
           sx={{ marginTop: "5px", marginBottom: "10px" }}
         ></ListItemText>
+      </div>
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <LongMenu />
       </div>
       <Divider />
       <div>
         <List
           sx={{
             width: "100%",
-            maxWidth: 360,
+            maxWidth: 400,
             bgcolor: "background.paper",
             overflow: "scroll",
+            height: "400px",
           }}
         >
-          {[1, 2, 3, 4].map((el, i) => {
+          {allUsers.map((el, i) => {
             return (
               <ListItem key={i} alignItems="flex-start">
-                <ListItemButton>
+                <ListItemButton onClick={() => handleSelect(el.name)}>
                   <ListItemAvatar>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src="/static/images/avatar/1.jpg"
-                    />
+                    <Avatar alt={el.name} />
                   </ListItemAvatar>
                   <ListItemText
-                    primary="John Doe"
+                    primary={!el ? "wait" : el.name}
                     secondary={
                       <React.Fragment>
-                        {"I'll be in your neighborhood doing errands this…"}
+                        {lastMessage === undefined ? "wait" : lastMessage}
                       </React.Fragment>
                     }
                   />

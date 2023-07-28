@@ -32,7 +32,6 @@ function LoginMain() {
       });
       const response = await request.json();
       user = response;
-      console.log(user);
       setUserLocally(user);
       if (user.msg === "login success") {
         setOpen(!isOpen);
