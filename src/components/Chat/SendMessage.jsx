@@ -6,8 +6,11 @@ import {
   Chip,
   List,
   ListItemAvatar,
+  Stack,
   TextField,
+  Typography,
 } from "@mui/material";
+import FaceIcon from "@mui/icons-material/Face";
 import {
   Timestamp,
   arrayUnion,
@@ -31,12 +34,15 @@ function SendMessage() {
   let currentUser = user.user.name;
 
   useEffect(() => {
-    if (selectedUser === "" || selectedUser === undefined) {
+    if (selectedUser.name === "" || selectedUser.name === undefined) {
       return;
     } else {
-      const unsub = onSnapshot(doc(db, "chats", selectedUser), (doc) => {
-        doc.exists() && setMessages(doc.data().messages);
-      });
+      const unsub = onSnapshot(
+        doc(db, "chats", selectedUser.selectedUid),
+        (doc) => {
+          doc.exists() && setMessages(doc.data().messages);
+        }
+      );
 
       return () => {
         unsub();
@@ -48,7 +54,7 @@ function SendMessage() {
     if (text.trim().length === 0) {
       return;
     } else {
-      await updateDoc(doc(db, "chats", selectedUser), {
+      await updateDoc(doc(db, "chats", selectedUser.selectedUid), {
         messages: arrayUnion({
           id: uuid(),
           text,
@@ -72,6 +78,26 @@ function SendMessage() {
 
   return (
     <div>
+      <div
+        style={{
+          // borderRadius: "50px",
+          display: "flex",
+          height: "30px",
+          width: "1000px",
+          border: "1px solid transparent",
+          justifyContent: "center",
+          alignItems: "center",
+          // backgroundColor: "#F0F8FF",
+        }}
+      >
+        <FaceIcon />
+        <Typography
+          variant="h6"
+          sx={{ marginLeft: "3px", marginBottom: "10px" }}
+        >
+          {selectedUser.name}
+        </Typography>
+      </div>
       <div className={SendMessagesClass.sendmessagecontainer}>
         <div className={SendMessagesClass.recieverclass}>
           {recieverMessages.map((el, i) => {
@@ -89,7 +115,9 @@ function SendMessage() {
                   }}
                 >
                   <ListItemAvatar sx={{ marginLeft: "8px" }}>
-                    <Avatar alt="name">{selectedUser[0].toUpperCase()}</Avatar>
+                    <Avatar alt="name">
+                      {selectedUser.name[0].toUpperCase()}
+                    </Avatar>
                   </ListItemAvatar>
                   <Chip
                     label={el}

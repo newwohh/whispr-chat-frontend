@@ -11,16 +11,16 @@ const useSendMessageStyles = makeStyles({
     borderRadius: "20px",
     width: "950px",
     marginBottom: "20px",
-    overflow: "scroll",
+    overflow: "auto",
+    justifyItems: "flex-end",
   },
   recieverclass: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-end",
     border: "1px solid transparent",
-    height: "500px",
+    height: "1000px",
     width: "330px",
-    overflow: "scroll",
   },
   senderclass: {
     display: "flex",
@@ -28,7 +28,7 @@ const useSendMessageStyles = makeStyles({
     justifyContent: "flex-end",
     alignItems: "end",
     border: "1px solid transparent",
-    height: "600px",
+    height: "1000px",
     width: "330px",
   },
 });

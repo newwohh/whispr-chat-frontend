@@ -9,7 +9,10 @@ import { ChatsContext } from "../context/ChatContext";
 import { UserContext } from "../context/UserContext";
 
 function Routes() {
-  const [selectedUser, setSelectedUser] = useState("");
+  const [selectedUser, setSelectedUser] = useState({
+    name: "",
+    selectedUid: "",
+  });
   const location = useLocation();
   let { ...user } = JSON.parse(localStorage.getItem("user") === null)
     ? "please log in"

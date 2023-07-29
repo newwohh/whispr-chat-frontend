@@ -8,7 +8,7 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { ChatsContext } from "../../context/ChatContext";
 import { UserContext } from "../../context/UserContext";
 import { db } from "../../config/firebase";
@@ -19,7 +19,10 @@ import useChatsStyle from "../../styles/Chats";
 function Chats() {
   const ChatsClass = useChatsStyle();
   const [messages, setMessages] = useState([]);
+  const [select, setSelect] = useState("");
   const { user } = useContext(ChatsContext);
+  const selectedref = useRef(0);
+
   const { selectedUser, setSelectedUser } = useContext(UserContext);
 
   let allUsers;
@@ -30,12 +33,15 @@ function Chats() {
   }
 
   useEffect(() => {
-    if (selectedUser === "" || selectedUser === undefined) {
+    if (selectedUser.name === "" || selectedUser.name === undefined) {
       return;
     } else {
-      const unsub = onSnapshot(doc(db, "chats", selectedUser), (doc) => {
-        doc.exists() && setMessages(doc.data().messages);
-      });
+      const unsub = onSnapshot(
+        doc(db, "chats", selectedUser.selectedUid),
+        (doc) => {
+          doc.exists() && setMessages(doc.data().messages);
+        }
+      );
 
       return () => {
         unsub();
@@ -43,11 +49,15 @@ function Chats() {
     }
   }, [selectedUser]);
 
-  const handleSelect = async (name) => {
-    const twovtwochat = user.user.name + name;
+  const handleSelect = async (CurrName) => {
+    setSelect(selectedref.current.firstChild.innerText);
+    const twovtwochat = user.user.name + CurrName;
     let userSelected = twovtwochat.split("").sort().join("");
-
-    setSelectedUser(userSelected);
+    setSelectedUser({
+      ...selectedUser,
+      selectedUid: userSelected,
+      name: CurrName,
+    });
     try {
       const res = await getDoc(doc(db, "chats", userSelected));
       if (!res.exists()) {
@@ -97,11 +107,15 @@ function Chats() {
           {allUsers.map((el, i) => {
             return (
               <ListItem key={i} alignItems="flex-start">
-                <ListItemButton onClick={() => handleSelect(el.name)}>
+                <ListItemButton
+                  selected={select}
+                  onClick={() => handleSelect(el.name)}
+                >
                   <ListItemAvatar>
                     <Avatar alt={el.name} />
                   </ListItemAvatar>
                   <ListItemText
+                    ref={selectedref}
                     primary={!el ? "wait" : el.name}
                     secondary={
                       <React.Fragment>
