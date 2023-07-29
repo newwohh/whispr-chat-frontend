@@ -6,11 +6,10 @@ import {
   Chip,
   List,
   ListItemAvatar,
-  Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import FaceIcon from "@mui/icons-material/Face";
+import Face6Icon from "@mui/icons-material/Face6";
 import {
   Timestamp,
   arrayUnion,
@@ -25,6 +24,7 @@ import { motion } from "framer-motion";
 import useSendMessageStyles from "../../styles/SendMessage";
 
 function SendMessage() {
+  const [online, setOnline] = useState(Boolean);
   const SendMessagesClass = useSendMessageStyles();
   const msginputref = useRef(0);
   const [text, setText] = useState("");
@@ -32,11 +32,15 @@ function SendMessage() {
   const { selectedUser } = useContext(UserContext);
   const { user } = useContext(ChatsContext);
   let currentUser = user.user.name;
-
+  let selectedUserProfile =
+    selectedUser.name === ""
+      ? "please select"
+      : `${selectedUser?.name[0].toUpperCase()}${selectedUser?.name?.slice(1)}`;
   useEffect(() => {
     if (selectedUser.name === "" || selectedUser.name === undefined) {
       return;
     } else {
+      setOnline(navigator.onLine === true);
       const unsub = onSnapshot(
         doc(db, "chats", selectedUser.selectedUid),
         (doc) => {
@@ -74,30 +78,68 @@ function SendMessage() {
     }
   });
 
-  console.log(messages, text.trim().length);
+  console.log(online, text.trim().length);
 
   return (
     <div>
-      <div
+      <motion.div
+        initial={{ y: 20 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 1 }}
         style={{
+          zIndex: 1,
+          position: "absolute",
           // borderRadius: "50px",
           display: "flex",
-          height: "30px",
+          height: "100px",
           width: "1000px",
           border: "1px solid transparent",
-          justifyContent: "center",
+          justifyContent: "flex-start",
           alignItems: "center",
-          // backgroundColor: "#F0F8FF",
+          backgroundColor: "white",
+          marginTop: "-60px",
+          boxShadow: "rgba(33, 35, 38, 0.1) 0px 10px 10px -10px",
         }}
       >
-        <FaceIcon />
-        <Typography
-          variant="h6"
-          sx={{ marginLeft: "3px", marginBottom: "10px" }}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
         >
-          {selectedUser.name}
-        </Typography>
-      </div>
+          {online ? (
+            <Face6Icon
+              sx={{
+                color: "#1da1f2",
+                marginLeft: "32px",
+                height: "100px",
+                width: "50px",
+              }}
+            />
+          ) : (
+            <Face6Icon
+              sx={{
+                color: "white",
+                marginLeft: "32px",
+                height: "100px",
+                width: "50px",
+              }}
+            />
+          )}
+
+          <Typography
+            variant="h6"
+            sx={{
+              marginLeft: "3px",
+              marginBottom: "0px",
+              fontSize: "30px",
+              color: "lightblue",
+            }}
+          >
+            {selectedUserProfile}
+          </Typography>
+        </div>
+      </motion.div>
       <div className={SendMessagesClass.sendmessagecontainer}>
         <div className={SendMessagesClass.recieverclass}>
           {recieverMessages.map((el, i) => {
@@ -125,6 +167,8 @@ function SendMessage() {
                       height: "50px",
                       marginTop: "10px",
                       fontSize: "18px",
+                      backgroundColor: "lightblue",
+                      color: "white",
                     }}
                   />
                 </List>
@@ -159,6 +203,8 @@ function SendMessage() {
                       height: "50px",
                       marginTop: "10px",
                       fontSize: "18px",
+                      backgroundColor: "lightblue",
+                      color: "white",
                     }}
                   />
                 </List>

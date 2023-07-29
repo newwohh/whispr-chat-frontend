@@ -15,7 +15,12 @@ function LandingNavbar() {
         justifyContent: "space-between",
       }}
     >
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
         <img
           src={logo}
           style={{
@@ -28,7 +33,15 @@ function LandingNavbar() {
           }}
           alt="logo"
         />
-        <Typography sx={{ color: "white", fontWeight: 600 }}>Whispr</Typography>
+        <Typography
+          sx={{
+            color: "white",
+            fontWeight: 600,
+            "&:hover": { cursor: "default" },
+          }}
+        >
+          Whispr
+        </Typography>
       </div>
       <div>
         <nav>

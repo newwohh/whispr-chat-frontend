@@ -7,7 +7,7 @@ const useSendMessageStyles = makeStyles({
     justifyContent: "space-between",
     border: "1px solid transparent",
     height: "600px",
-    backgroundColor: "#F0F8FF",
+    // backgroundColor: "#F0F8FF",
     borderRadius: "20px",
     width: "950px",
     marginBottom: "20px",

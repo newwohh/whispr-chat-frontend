@@ -16,6 +16,8 @@ const useChatsMain = makeStyles({
     marginRight: "15px",
   },
   chatmainsubtwo: {
+    marginTop: "20px",
+    height: "200px",
     width: "950px",
     border: "1px solid transparent",
     marginLeft: "10px",

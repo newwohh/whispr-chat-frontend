@@ -23,6 +23,9 @@ export default function LongMenu() {
     navigation("/");
   };
 
+  const handleWorld = () => {
+    navigation("/worldchat");
+  };
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -57,7 +60,7 @@ export default function LongMenu() {
         <MenuItem selected={"Logout"} onClick={handleLogout}>
           Logout
         </MenuItem>
-        <MenuItem onClick={handleClose}>World Chat</MenuItem>
+        <MenuItem onClick={handleWorld}>World Chat</MenuItem>
       </Menu>
     </div>
   );

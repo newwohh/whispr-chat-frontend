@@ -20,16 +20,19 @@ function FooterComponents() {
         style={{ display: "flex" }}
       >
         <Link
+          href="instagram.com"
           sx={{ marginLeft: "10px", color: "white", textDecoration: "none" }}
         >
           Instagram
         </Link>
         <Link
+          href="twitter.com"
           sx={{ marginLeft: "10px", color: "white", textDecoration: "none" }}
         >
           Twitter
         </Link>
         <Link
+          href="https://github.com/newwohh"
           sx={{ marginLeft: "10px", color: "white", textDecoration: "none" }}
         >
           Github

@@ -1,4 +1,4 @@
-import { Button, Divider, TextField, Typography } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import React from "react";
 import useSignupStyles from "../../styles/SignupStyle";
 import Background from "../Background/Background";
@@ -81,6 +81,7 @@ function SignUpMain() {
               label=" Confirm Password"
               id="outlined-size-normal"
               placeholder="Type your password"
+              type="password"
               sx={{ width: "350px", marginTop: "30px" }}
               onChange={(e) =>
                 (signupCredentials.passwordConfirm = e.target.value)
@@ -111,8 +112,6 @@ function SignUpMain() {
               Submit
             </Button>
           </div>
-          <Divider />
-          <div>Google Auth</div>
         </div>
       </div>
     </>

@@ -1,11 +1,17 @@
 import React from "react";
-import { Button, Link, TextField, Typography } from "@mui/material";
+import { Button, Divider, Link, TextField, Typography } from "@mui/material";
 import useLoginStyles from "../../styles/LoginStyle";
 import { motion } from "framer-motion";
 import Background from "../Background/Background";
 import { useNavigate } from "react-router-dom";
 import { backendBaseUrl } from "../../constants/constants";
 import { setUserLocally } from "../../handlers/setLocalStorage";
+import {
+  GoogleOAuthProvider,
+  googleLogout,
+  GoogleLogin,
+} from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
 
 function LoginMain() {
   const [isOpen, setOpen] = React.useState(false);
@@ -40,6 +46,10 @@ function LoginMain() {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const logOut = () => {
+    googleLogout();
   };
 
   return (
@@ -91,6 +101,7 @@ function LoginMain() {
                   label="Password"
                   id="outlined-size-normal"
                   placeholder="Type your password"
+                  type="password"
                   sx={{ width: "350px", marginTop: "30px" }}
                   onChange={(e) => (credentials.password = e.target.value)}
                 />
@@ -121,6 +132,29 @@ function LoginMain() {
               </div>
             </motion.div>
           )}
+          <Divider sx={{ marginTop: "10px" }} />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              textAlign: "center",
+              marginTop: "20px",
+            }}
+          >
+            <GoogleOAuthProvider clientId="805397084816-486pgj2buc34kqnnmna40ae7cd0cufiv.apps.googleusercontent.com">
+              <GoogleLogin
+                size="10px"
+                onSuccess={(credentialResponse) => {
+                  var decoded = jwt_decode(credentialResponse.credential);
+                  console.log(decoded);
+                }}
+                onError={() => {
+                  console.log("Login Failed");
+                }}
+              />
+              <div>{/* <button onClick={logOut}>log</button> */}</div>
+            </GoogleOAuthProvider>
+          </div>
         </motion.div>
       </main>
     </>

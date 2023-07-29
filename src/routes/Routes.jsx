@@ -7,6 +7,9 @@ import Chat from "../pages/Chat";
 import { AnimatePresence } from "framer-motion";
 import { ChatsContext } from "../context/ChatContext";
 import { UserContext } from "../context/UserContext";
+import WorldChat from "../pages/WorldChat";
+import { Online, Offline } from "react-detect-offline";
+import OfflineContent from "../components/Offline/OfflineContent";
 
 function Routes() {
   const [selectedUser, setSelectedUser] = useState({
@@ -22,18 +25,24 @@ function Routes() {
   console.log(user);
 
   return (
-    <AnimatePresence>
-      <UserContext.Provider value={{ selectedUser, setSelectedUser }}>
-        <ChatsContext.Provider value={{ user }}>
-          <Router location={location} key={location.pathname}>
-            <Route path="/" element={<Landing />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/chat" element={<Chat />} />
-          </Router>
-        </ChatsContext.Provider>
-      </UserContext.Provider>
-    </AnimatePresence>
+    <React.Fragment>
+      <Online>
+        <AnimatePresence>
+          <UserContext.Provider value={{ selectedUser, setSelectedUser }}>
+            <ChatsContext.Provider value={{ user }}>
+              <Router location={location} key={location.pathname}>
+                <Route path="/" element={<Landing />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/chat" element={<Chat />} />
+                <Route path="/worldchat" element={<WorldChat />} />
+              </Router>
+            </ChatsContext.Provider>
+          </UserContext.Provider>
+        </AnimatePresence>
+      </Online>
+      <Offline>{<OfflineContent />}</Offline>
+    </React.Fragment>
   );
 }
 

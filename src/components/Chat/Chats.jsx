@@ -108,7 +108,7 @@ function Chats() {
             return (
               <ListItem key={i} alignItems="flex-start">
                 <ListItemButton
-                  selected={select}
+                  // selected={select}
                   onClick={() => handleSelect(el.name)}
                 >
                   <ListItemAvatar>
