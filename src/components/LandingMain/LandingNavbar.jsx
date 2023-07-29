@@ -4,6 +4,7 @@ import { Button, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 
 function LandingNavbar() {
+  console.log(process.env);
   return (
     <motion.div
       initial={{ y: -100 }}

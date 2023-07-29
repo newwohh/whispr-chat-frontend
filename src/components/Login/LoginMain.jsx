@@ -48,10 +48,6 @@ function LoginMain() {
     }
   };
 
-  const logOut = () => {
-    googleLogout();
-  };
-
   return (
     <>
       <main
@@ -141,7 +137,9 @@ function LoginMain() {
               marginTop: "20px",
             }}
           >
-            <GoogleOAuthProvider clientId="805397084816-486pgj2buc34kqnnmna40ae7cd0cufiv.apps.googleusercontent.com">
+            <GoogleOAuthProvider
+              clientId={`${process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}`}
+            >
               <GoogleLogin
                 size="10px"
                 onSuccess={(credentialResponse) => {
