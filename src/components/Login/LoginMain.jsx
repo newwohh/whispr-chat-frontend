@@ -6,11 +6,7 @@ import Background from "../Background/Background";
 import { useNavigate } from "react-router-dom";
 import { backendBaseUrl } from "../../constants/constants";
 import { setUserLocally } from "../../handlers/setLocalStorage";
-import {
-  GoogleOAuthProvider,
-  googleLogout,
-  GoogleLogin,
-} from "@react-oauth/google";
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
 
 function LoginMain() {
@@ -62,7 +58,8 @@ function LoginMain() {
           style={{
             width: isOpen ? "1400px" : "500px",
             textAlign: "center",
-            height: isOpen ? "700px" : "450x",
+            height: isOpen ? "800px" : "450x",
+            padding: isOpen ? "0px" : "50px",
           }}
           transition={{ type: "keyframes", duration: 1.5 }}
         >
@@ -126,33 +123,33 @@ function LoginMain() {
                   Not a member? Click here to SignUp
                 </Link>
               </div>
+              <Divider sx={{ marginTop: "10px" }} />
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  textAlign: "center",
+                  marginTop: "20px",
+                }}
+              >
+                <GoogleOAuthProvider
+                  clientId={`${process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}`}
+                >
+                  <GoogleLogin
+                    size="10px"
+                    onSuccess={(credentialResponse) => {
+                      var decoded = jwt_decode(credentialResponse.credential);
+                      console.log(decoded);
+                    }}
+                    onError={() => {
+                      console.log("Login Failed");
+                    }}
+                  />
+                  <div>{/* <button onClick={logOut}>log</button> */}</div>
+                </GoogleOAuthProvider>
+              </div>
             </motion.div>
           )}
-          <Divider sx={{ marginTop: "10px" }} />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              textAlign: "center",
-              marginTop: "20px",
-            }}
-          >
-            <GoogleOAuthProvider
-              clientId={`${process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}`}
-            >
-              <GoogleLogin
-                size="10px"
-                onSuccess={(credentialResponse) => {
-                  var decoded = jwt_decode(credentialResponse.credential);
-                  console.log(decoded);
-                }}
-                onError={() => {
-                  console.log("Login Failed");
-                }}
-              />
-              <div>{/* <button onClick={logOut}>log</button> */}</div>
-            </GoogleOAuthProvider>
-          </div>
         </motion.div>
       </main>
     </>

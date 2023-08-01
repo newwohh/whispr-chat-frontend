@@ -9,16 +9,15 @@ import {
   ListItemAvatar,
   TextField,
 } from "@mui/material";
-// import useChatsMain from "../styles/Chatsmain";
 import { motion } from "framer-motion";
 import Background from "../components/Background/Background";
 import { ChatsContext } from "../context/ChatContext";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { useNavigate } from "react-router-dom";
+import { backendBaseUrl } from "../constants/constants";
 
 function WorldChat() {
   const { user } = useContext(ChatsContext);
-  // const useWorldChat = useChatsMain();
   const [username, setUsername] = useState("username");
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
@@ -27,7 +26,6 @@ function WorldChat() {
 
   useEffect(() => {
     Pusher.logToConsole = true;
-
     const pusher = new Pusher("cbdd104b9a7b8c257cca", {
       cluster: "ap2",
     });
@@ -41,7 +39,7 @@ function WorldChat() {
   const submit = async (e) => {
     e.preventDefault();
     setUsername(user.user.name);
-    await fetch("http://127.0.0.1:8000/api/messages/", {
+    await fetch(backendBaseUrl + "/api/messages/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -51,8 +49,6 @@ function WorldChat() {
     });
     setMessage("");
   };
-
-  console.log(message, username);
 
   return (
     <div
@@ -67,7 +63,7 @@ function WorldChat() {
       <Button
         sx={{
           position: "absolute",
-          marginLeft: "-1350px",
+          marginLeft: "-1300px",
           marginTop: "-700px",
         }}
         onClick={() => navigation(-1)}
@@ -76,9 +72,9 @@ function WorldChat() {
       </Button>
       <div
         style={{
-          padding: "50px",
+          // padding: "50px",
           width: "1400px",
-          height: "750px",
+          height: "800px",
           backgroundColor: "white",
           borderRadius: "40px",
         }}

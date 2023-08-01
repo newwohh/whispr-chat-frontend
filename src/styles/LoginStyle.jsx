@@ -2,7 +2,7 @@ import { makeStyles } from "@mui/styles";
 
 const useLoginStyles = makeStyles({
   logininputcontainer: {
-    padding: "50px",
+    // padding: "50px",
     width: "500px",
     height: "450px",
     backgroundColor: "white",

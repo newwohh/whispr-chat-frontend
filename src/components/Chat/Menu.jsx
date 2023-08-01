@@ -7,8 +7,6 @@ import { ChatsContext } from "../../context/ChatContext";
 import { removeUserLocally } from "../../handlers/setLocalStorage";
 import { useNavigate } from "react-router-dom";
 
-const ITEM_HEIGHT = 48;
-
 export default function LongMenu() {
   const { user } = React.useContext(ChatsContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -33,6 +31,7 @@ export default function LongMenu() {
   return (
     <div>
       <IconButton
+        style={{ color: "#1da1f2" }}
         aria-label="more"
         id="long-button"
         aria-controls={open ? "long-menu" : undefined}
@@ -50,12 +49,6 @@ export default function LongMenu() {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        PaperProps={{
-          style: {
-            maxHeight: ITEM_HEIGHT * 4.5,
-            width: "20ch",
-          },
-        }}
       >
         <MenuItem selected={"Logout"} onClick={handleLogout}>
           Logout

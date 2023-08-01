@@ -30,6 +30,7 @@ const useSendMessageStyles = makeStyles({
     border: "1px solid transparent",
     height: "1000px",
     width: "330px",
+    marginRight: "20px",
   },
 });
 

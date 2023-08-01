@@ -8,7 +8,7 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ChatsContext } from "../../context/ChatContext";
 import { UserContext } from "../../context/UserContext";
 import { db } from "../../config/firebase";
@@ -21,8 +21,6 @@ function Chats() {
   const [messages, setMessages] = useState([]);
   const [select, setSelect] = useState("");
   const { user } = useContext(ChatsContext);
-  const selectedref = useRef(0);
-
   const { selectedUser, setSelectedUser } = useContext(UserContext);
 
   let allUsers;
@@ -50,7 +48,7 @@ function Chats() {
   }, [selectedUser]);
 
   const handleSelect = async (CurrName) => {
-    setSelect(selectedref.current.firstChild.innerText);
+    setSelect(CurrName);
     const twovtwochat = user.user.name + CurrName;
     let userSelected = twovtwochat.split("").sort().join("");
     setSelectedUser({
@@ -76,10 +74,13 @@ function Chats() {
       <div className={ChatsClass.profilediv}>
         <Avatar
           sx={{
-            height: "180px",
-            width: "180px",
+            height: "120px",
+            width: "120px",
             borderRadius: "50%",
             fontSize: "75px",
+            backgroundColor: "white",
+            color: "#1da1f2",
+            border: "2px solid #1da1f2",
           }}
         >
           {user.user.name[0].toUpperCase()}
@@ -99,23 +100,23 @@ function Chats() {
           sx={{
             width: "100%",
             maxWidth: 400,
-            bgcolor: "background.paper",
             overflow: "scroll",
             height: "400px",
           }}
         >
           {allUsers.map((el, i) => {
+            const isSelected = el.name === select;
             return (
               <ListItem key={i} alignItems="flex-start">
                 <ListItemButton
-                  // selected={select}
+                  selected={isSelected}
                   onClick={() => handleSelect(el.name)}
                 >
                   <ListItemAvatar>
                     <Avatar alt={el.name} />
                   </ListItemAvatar>
                   <ListItemText
-                    ref={selectedref}
+                    sx={{ color: "#1da1f2" }}
                     primary={!el ? "wait" : el.name}
                     secondary={
                       <React.Fragment>

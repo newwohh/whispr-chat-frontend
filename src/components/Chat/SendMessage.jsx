@@ -14,7 +14,9 @@ import {
   Timestamp,
   arrayUnion,
   doc,
+  getDoc,
   onSnapshot,
+  setDoc,
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../config/firebase";
@@ -58,14 +60,23 @@ function SendMessage() {
     if (text.trim().length === 0) {
       return;
     } else {
-      await updateDoc(doc(db, "chats", selectedUser.selectedUid), {
-        messages: arrayUnion({
-          id: uuid(),
-          text,
-          senderId: currentUser,
-          date: Timestamp.now(),
-        }),
-      });
+      const twovtwochat = user.user.name + selectedUser.name;
+      let userSelected = twovtwochat.split("").sort().join("");
+      const res = await getDoc(doc(db, "chats", userSelected));
+      if (!res.exists()) {
+        await setDoc(doc(db, "chats", userSelected), {
+          messages: [],
+        });
+      } else {
+        await updateDoc(doc(db, "chats", userSelected), {
+          messages: arrayUnion({
+            id: uuid(),
+            text,
+            senderId: currentUser,
+            date: Timestamp.now(),
+          }),
+        });
+      }
     }
     setText("");
   };
@@ -92,12 +103,12 @@ function SendMessage() {
           // borderRadius: "50px",
           display: "flex",
           height: "100px",
-          width: "1000px",
+          width: "950px",
           border: "1px solid transparent",
           justifyContent: "flex-start",
           alignItems: "center",
           backgroundColor: "white",
-          marginTop: "-60px",
+          marginTop: "-10px",
           boxShadow: "rgba(33, 35, 38, 0.1) 0px 10px 10px -10px",
         }}
       >
@@ -133,7 +144,7 @@ function SendMessage() {
               marginLeft: "3px",
               marginBottom: "0px",
               fontSize: "30px",
-              color: "lightblue",
+              color: "grey",
             }}
           >
             {selectedUserProfile}
@@ -167,7 +178,7 @@ function SendMessage() {
                       height: "50px",
                       marginTop: "10px",
                       fontSize: "18px",
-                      backgroundColor: "lightblue",
+                      backgroundColor: "#1da1f2",
                       color: "white",
                     }}
                   />
@@ -203,7 +214,7 @@ function SendMessage() {
                       height: "50px",
                       marginTop: "10px",
                       fontSize: "18px",
-                      backgroundColor: "lightblue",
+                      backgroundColor: "#1da1f2",
                       color: "white",
                     }}
                   />
@@ -219,12 +230,14 @@ function SendMessage() {
           border: "1px solid transparent",
           height: "100px",
           width: "950px",
+          display: "flex",
+          overflow: "hidden",
         }}
       >
         <TextField
           ref={msginputref}
           label="Write a message...."
-          sx={{ width: "770px" }}
+          sx={{ width: "900px", marginTop: "20px" }}
           inputProps={{
             style: {
               borderRadius: "50px",
@@ -241,6 +254,7 @@ function SendMessage() {
             backgroundColor: "#1da1f2",
             color: "white",
             marginLeft: "20px",
+            marginTop: "20px",
             "&:hover": {
               backgroundColor: "#60dfcd",
             },
