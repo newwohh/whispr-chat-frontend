@@ -7,7 +7,7 @@ import { backendBaseUrl } from "../../constants/constants";
 import { useNavigate } from "react-router-dom";
 
 function SignUpMain() {
-  const SignUpStyleClass = useSignupStyles();
+  const SignUpStyleClass = useSignupStyles;
   const navigation = useNavigate(0);
   let signupCredentials = {
     name: "",
@@ -47,7 +47,7 @@ function SignUpMain() {
     <>
       <div>
         <Background />
-        <div className={SignUpStyleClass.signupinputcontainer}>
+        <div style={SignUpStyleClass.signupinputcontainer}>
           <motion.div
             initial={{ scale: 0.5 }}
             animate={{ scale: 1 }}
