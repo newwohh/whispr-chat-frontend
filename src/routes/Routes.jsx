@@ -26,22 +26,22 @@ function Routes() {
 
   return (
     <React.Fragment>
-      <Online>
-        <AnimatePresence>
-          <UserContext.Provider value={{ selectedUser, setSelectedUser }}>
-            <ChatsContext.Provider value={{ user }}>
-              <Router location={location} key={location.pathname}>
-                <Route path="/" element={<Landing />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/chat" element={<Chat />} />
-                <Route path="/worldchat" element={<WorldChat />} />
-              </Router>
-            </ChatsContext.Provider>
-          </UserContext.Provider>
-        </AnimatePresence>
-      </Online>
-      <Offline>{<OfflineContent />}</Offline>
+      {/* <Online> */}
+      <AnimatePresence>
+        <UserContext.Provider value={{ selectedUser, setSelectedUser }}>
+          <ChatsContext.Provider value={{ user }}>
+            <Router location={location} key={location.pathname}>
+              <Route path="/" element={<Landing />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/chat" element={<Chat />} />
+              <Route path="/worldchat" element={<WorldChat />} />
+            </Router>
+          </ChatsContext.Provider>
+        </UserContext.Provider>
+      </AnimatePresence>
+      {/* </Online> */}
+      {/* <Offline>{<OfflineContent />}</Offline> */}
     </React.Fragment>
   );
 }
