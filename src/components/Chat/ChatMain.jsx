@@ -6,17 +6,17 @@ import Chats from "./Chats";
 import useChatsMain from "../../styles/Chatsmain";
 
 function ChatMain() {
-  const ChatsMain = useChatsMain();
+  const ChatsMain = useChatsMain;
   return (
     <div>
       <Background />
       <div>
-        <div className={ChatsMain.chatmaincon}>
-          <div className={ChatsMain.chatmainsub}>
+        <div style={ChatsMain.chatmaincon}>
+          <div style={ChatsMain.chatmainsub}>
             <Chats />
           </div>
           <Divider />
-          <div className={ChatsMain.chatmainsubtwo}>
+          <div style={ChatsMain.chatmainsubtwo}>
             <SendMessage />
           </div>
         </div>

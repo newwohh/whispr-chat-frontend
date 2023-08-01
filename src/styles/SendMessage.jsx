@@ -1,6 +1,4 @@
-import { makeStyles } from "@mui/styles";
-
-const useSendMessageStyles = makeStyles({
+const useSendMessageStyles = {
   sendmessagecontainer: {
     padding: "20px",
     display: "flex",
@@ -32,6 +30,6 @@ const useSendMessageStyles = makeStyles({
     width: "330px",
     marginRight: "20px",
   },
-});
+};
 
 export default useSendMessageStyles;

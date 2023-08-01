@@ -17,7 +17,7 @@ import LongMenu from "./Menu";
 import useChatsStyle from "../../styles/Chats";
 
 function Chats() {
-  const ChatsClass = useChatsStyle();
+  const ChatsClass = useChatsStyle;
   const [messages, setMessages] = useState([]);
   const [select, setSelect] = useState("");
   const { user } = useContext(ChatsContext);
@@ -71,7 +71,7 @@ function Chats() {
       : messages[messages.length - 1].text;
   return (
     <div>
-      <div className={ChatsClass.profilediv}>
+      <div style={ChatsClass.profilediv}>
         <Avatar
           sx={{
             height: "120px",
@@ -85,7 +85,9 @@ function Chats() {
         >
           {user.user.name[0].toUpperCase()}
         </Avatar>
-        <Typography sx={{ marginTop: "15px" }}>{user.user.name}</Typography>
+        <Typography sx={{ marginTop: "15px", color: "#1da1f2" }}>
+          {user.user.name}
+        </Typography>
         <ListItemText
           secondary={"@" + user.user.name + user.user.id}
           sx={{ marginTop: "5px", marginBottom: "10px" }}

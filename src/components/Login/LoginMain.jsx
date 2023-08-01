@@ -1,5 +1,12 @@
 import React from "react";
-import { Button, Divider, Link, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  Divider,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
 import useLoginStyles from "../../styles/LoginStyle";
 import { motion } from "framer-motion";
 import Background from "../Background/Background";
@@ -11,7 +18,7 @@ import jwt_decode from "jwt-decode";
 
 function LoginMain() {
   const [isOpen, setOpen] = React.useState(false);
-  const LoginStyleClass = useLoginStyles();
+  const [login, setLogin] = React.useState(false);
   const navigation = useNavigate(0);
   let credentials = { email: "", password: "" };
   const navigateTo = () => {
@@ -20,6 +27,9 @@ function LoginMain() {
   let user;
 
   const loginHandler = async (email, password) => {
+    if (user === undefined) {
+      setLogin(true);
+    }
     try {
       const request = await fetch(backendBaseUrl + "/api/login/", {
         method: "POST",
@@ -53,13 +63,14 @@ function LoginMain() {
       >
         <Background />
         <motion.div
-          className={LoginStyleClass.logininputcontainer}
           layout
           style={{
             width: isOpen ? "1400px" : "500px",
             textAlign: "center",
             height: isOpen ? "800px" : "450x",
             padding: isOpen ? "0px" : "50px",
+            backgroundColor: "white",
+            borderRadius: "40px",
           }}
           transition={{ type: "keyframes", duration: 1.5 }}
         >
@@ -115,7 +126,11 @@ function LoginMain() {
                     loginHandler(credentials.email, credentials.password)
                   }
                 >
-                  Submit
+                  {login ? (
+                    <CircularProgress size={20} sx={{ color: "white" }} />
+                  ) : (
+                    "submit"
+                  )}
                 </Button>
               </div>
               <div style={{ zIndex: 1 }}>
@@ -145,7 +160,6 @@ function LoginMain() {
                       console.log("Login Failed");
                     }}
                   />
-                  <div>{/* <button onClick={logOut}>log</button> */}</div>
                 </GoogleOAuthProvider>
               </div>
             </motion.div>

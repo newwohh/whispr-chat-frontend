@@ -1,6 +1,4 @@
-import { makeStyles } from "@mui/styles";
-
-const useSignupStyles = makeStyles({
+const useSignupStyles = {
   signupinputcontainer: {
     padding: "50px",
     width: "500px",
@@ -9,6 +7,6 @@ const useSignupStyles = makeStyles({
     borderRadius: "40px",
     textAlign: "center",
   },
-});
+};
 
 export default useSignupStyles;

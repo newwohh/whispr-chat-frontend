@@ -1,6 +1,4 @@
-import { makeStyles } from "@mui/styles";
-
-const useChatsMain = makeStyles({
+const useChatsMain = {
   chatmaincon: {
     display: "flex",
     width: "1400px",
@@ -28,6 +26,6 @@ const useChatsMain = makeStyles({
     border: "1px solid transparent",
     marginLeft: "10px",
   },
-});
+};
 
 export default useChatsMain;

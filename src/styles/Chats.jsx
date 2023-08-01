@@ -1,6 +1,4 @@
-import { makeStyles } from "@mui/styles";
-
-const useChatsStyle = makeStyles({
+const useChatsStyle = {
   profilediv: {
     marginTop: "20px",
     textAlign: "center",
@@ -10,6 +8,6 @@ const useChatsStyle = makeStyles({
     flexDirection: "column",
     color: "white",
   },
-});
+};
 
 export default useChatsStyle;

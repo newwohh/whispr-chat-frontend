@@ -2,8 +2,10 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import {
   Avatar,
+  Box,
   Button,
   Chip,
+  ClickAwayListener,
   List,
   ListItemAvatar,
   TextField,
@@ -24,10 +26,13 @@ import { v4 as uuid } from "uuid";
 import { ChatsContext } from "../../context/ChatContext";
 import { motion } from "framer-motion";
 import useSendMessageStyles from "../../styles/SendMessage";
+import EmojiPicker from "emoji-picker-react";
+import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 
 function SendMessage() {
   const [online, setOnline] = useState(Boolean);
-  const SendMessagesClass = useSendMessageStyles();
+  const [Emoji, setEmoji] = useState(false);
+  const SendMessagesClass = useSendMessageStyles;
   const msginputref = useRef(0);
   const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);
@@ -89,7 +94,9 @@ function SendMessage() {
     }
   });
 
-  console.log(online, text.trim().length);
+  const onEmojiClick = (emojiObj) => {
+    setText(emojiObj.emoji);
+  };
 
   return (
     <div>
@@ -151,8 +158,8 @@ function SendMessage() {
           </Typography>
         </div>
       </motion.div>
-      <div className={SendMessagesClass.sendmessagecontainer}>
-        <div className={SendMessagesClass.recieverclass}>
+      <div style={SendMessagesClass.sendmessagecontainer}>
+        <div style={SendMessagesClass.recieverclass}>
           {recieverMessages.map((el, i) => {
             return (
               <motion.div
@@ -188,7 +195,7 @@ function SendMessage() {
           })}
         </div>
 
-        <motion.div className={SendMessagesClass.senderclass}>
+        <motion.div style={SendMessagesClass.senderclass}>
           {allMessages.map((el, i) => {
             return (
               <motion.div
@@ -224,7 +231,6 @@ function SendMessage() {
           })}
         </motion.div>
       </div>
-
       <div
         style={{
           border: "1px solid transparent",
@@ -246,6 +252,17 @@ function SendMessage() {
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
+        {Emoji ? (
+          <ClickAwayListener onClickAway={() => setEmoji(false)}>
+            <Box sx={{ zIndex: 1, height: "500px" }}>
+              <EmojiPicker onEmojiClick={(e, el) => console.log(el.emoji)} />
+            </Box>
+          </ClickAwayListener>
+        ) : (
+          <Button onClick={() => setEmoji(!Emoji)}>
+            <EmojiEmotionsIcon />
+          </Button>
+        )}
         <Button
           sx={{
             borderRadius: "30px",
