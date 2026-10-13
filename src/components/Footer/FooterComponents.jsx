@@ -1,45 +1,85 @@
-import { Link } from "@mui/material";
 import React from "react";
-import { motion } from "framer-motion";
+import { Box, Typography, Link } from "@mui/material";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 
 function FooterComponents() {
   return (
-    <div style={{ display: "flex" }}>
-      <motion.div
-        initial={{ y: 100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 1 }}
-        style={{ display: "flex" }}
-      >
-        <p>&copy; hellonevo13@gmail.com</p>
-      </motion.div>
-      <motion.div
-        initial={{ y: 100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 1 }}
-        style={{ display: "flex" }}
-      >
+    <Box
+      component="footer"
+      sx={{
+        width: "100%",
+        maxWidth: "1240px",
+        marginTop: "auto",
+        padding: { xs: "24px 16px", md: "32px 24px" },
+        borderTop: "1px solid rgba(255, 255, 255, 0.06)",
+        display: "flex",
+        flexDirection: { xs: "column", sm: "row" },
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: 2,
+      }}
+    >
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+        <Box
+          sx={{
+            width: 8,
+            height: 8,
+            borderRadius: "50%",
+            backgroundColor: "#10b981",
+            boxShadow: "0 0 8px #10b981",
+          }}
+        />
+        <Typography variant="body2" sx={{ color: "#94a3b8", fontSize: "0.85rem" }}>
+          &copy; {new Date().getFullYear()} Whispr. Encrypted &amp; realtime messaging.
+        </Typography>
+      </Box>
+
+      <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 2, sm: 3 } }}>
         <Link
-          href="instagram.com"
-          sx={{ marginLeft: "10px", color: "white", textDecoration: "none" }}
+          href="https://github.com/newwohh/whispr-chat-frontend"
+          target="_blank"
+          rel="noopener noreferrer"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 0.8,
+            color: "#94a3b8",
+            fontSize: "0.85rem",
+            textDecoration: "none",
+            transition: "color 0.2s ease",
+            "&:hover": { color: "#ffffff" },
+          }}
         >
-          Instagram
+          <GitHubIcon sx={{ fontSize: 18 }} />
+          GitHub
         </Link>
         <Link
-          href="twitter.com"
-          sx={{ marginLeft: "10px", color: "white", textDecoration: "none" }}
+          href="https://twitter.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 0.8,
+            color: "#94a3b8",
+            fontSize: "0.85rem",
+            textDecoration: "none",
+            transition: "color 0.2s ease",
+            "&:hover": { color: "#ffffff" },
+          }}
         >
+          <TwitterIcon sx={{ fontSize: 18 }} />
           Twitter
         </Link>
-        <Link
-          href="https://github.com/newwohh"
-          sx={{ marginLeft: "10px", color: "white", textDecoration: "none" }}
-        >
-          Github
-        </Link>
-      </motion.div>
-    </div>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, color: "#64748b", fontSize: "0.85rem" }}>
+          <ShieldOutlinedIcon sx={{ fontSize: 16 }} />
+          <span>Private &amp; Secure</span>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 
-export default FooterComponents;
+export default React.memo(FooterComponents);
