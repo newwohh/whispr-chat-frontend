@@ -1,25 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ChatMain from "../components/Chat/ChatMain";
 import { titleHandler } from "../actions/actions";
+import { motion } from "framer-motion";
 
 function Chat() {
-  titleHandler("Chat,Share and Express");
+  useEffect(() => {
+    titleHandler("Messages");
+  }, []);
+
   return (
-    <div>
-      <div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundSize: "cover",
-            height: "100vh",
-          }}
-        >
-          <ChatMain />
-        </div>
-      </div>
-    </div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      style={{ width: "100%", minHeight: "100vh" }}
+    >
+      <ChatMain />
+    </motion.div>
   );
 }
 
