@@ -68,8 +68,8 @@ function Chats() {
         flexDirection: "column",
         height: "100%",
         width: "100%",
-        background: "rgba(19, 25, 38, 0.85)",
-        borderRight: "1px solid rgba(255, 255, 255, 0.08)",
+        background: "#09090b",
+        borderRight: "1px solid rgba(255, 255, 255, 0.1)",
       }}
     >
       {/* Current User Header */}
@@ -90,8 +90,8 @@ function Chats() {
                 height: 42,
                 fontSize: "1rem",
                 fontWeight: 700,
-                backgroundColor: "#4f46e5",
-                color: "#ffffff",
+                backgroundColor: "#ffffff",
+                color: "#000000",
               }}
             >
               {getInitials(currentUser.name)}
@@ -103,9 +103,9 @@ function Chats() {
                 right: 1,
                 width: 9,
                 height: 9,
-                bgcolor: "#4f46e5",
+                bgcolor: "#ffffff",
                 borderRadius: "50%",
-                border: "2px solid #0b0f19",
+                border: "2px solid #000000",
               }}
             />
           </Box>
@@ -113,14 +113,14 @@ function Chats() {
             <Typography
               variant="subtitle1"
               noWrap
-              sx={{ fontWeight: 700, color: "#f8fafc", lineHeight: 1.2 }}
+              sx={{ fontWeight: 700, color: "#ffffff", lineHeight: 1.2 }}
             >
               {currentUser.name}
             </Typography>
             <Typography
               variant="caption"
               noWrap
-              sx={{ color: "#94a3b8", fontSize: "0.75rem" }}
+              sx={{ color: "#a1a1aa", fontSize: "0.75rem" }}
             >
               @{currentUser.name?.toLowerCase().replace(/\s+/g, "") || "whispr"}
             </Typography>
@@ -135,27 +135,27 @@ function Chats() {
         <ListItemButton
           onClick={() => navigate("/worldchat")}
           sx={{
-            borderRadius: "10px",
-            backgroundColor: "rgba(79, 70, 229, 0.1)",
-            border: "1px solid rgba(79, 70, 229, 0.2)",
+            borderRadius: "8px",
+            backgroundColor: "rgba(255, 255, 255, 0.04)",
+            border: "1px solid rgba(255, 255, 255, 0.12)",
             p: "9px 12px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
             transition: "all 0.15s ease",
             "&:hover": {
-              backgroundColor: "rgba(79, 70, 229, 0.18)",
-              borderColor: "rgba(79, 70, 229, 0.35)",
+              backgroundColor: "rgba(255, 255, 255, 0.08)",
+              borderColor: "rgba(255, 255, 255, 0.25)",
             },
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center", gap: 1.2 }}>
-            <PublicRoundedIcon sx={{ color: "#818cf8", fontSize: 20 }} />
+            <PublicRoundedIcon sx={{ color: "#ffffff", fontSize: 20 }} />
             <Box>
-              <Typography sx={{ color: "#f8fafc", fontSize: "0.85rem", fontWeight: 700 }}>
+              <Typography sx={{ color: "#ffffff", fontSize: "0.85rem", fontWeight: 700 }}>
                 World Chat Room
               </Typography>
-              <Typography sx={{ color: "#94a3b8", fontSize: "0.75rem" }}>
+              <Typography sx={{ color: "#a1a1aa", fontSize: "0.75rem" }}>
                 Public live stream
               </Typography>
             </Box>
@@ -167,8 +167,9 @@ function Chats() {
               height: 18,
               fontSize: "0.65rem",
               fontWeight: 800,
-              backgroundColor: "rgba(79, 70, 229, 0.2)",
-              color: "#a5b4fc",
+              backgroundColor: "rgba(255, 255, 255, 0.12)",
+              color: "#ffffff",
+              border: "1px solid rgba(255, 255, 255, 0.2)",
             }}
           />
         </ListItemButton>
@@ -185,7 +186,7 @@ function Chats() {
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchRoundedIcon sx={{ color: "#64748b", fontSize: 18 }} />
+                <SearchRoundedIcon sx={{ color: "#71717a", fontSize: 18 }} />
               </InputAdornment>
             ),
           }}
@@ -193,7 +194,7 @@ function Chats() {
             "& .MuiOutlinedInput-root": {
               borderRadius: "8px",
               fontSize: "0.85rem",
-              backgroundColor: "rgba(30, 41, 59, 0.4)",
+              backgroundColor: "rgba(255, 255, 255, 0.03)",
             },
           }}
         />
@@ -212,7 +213,7 @@ function Chats() {
         <Typography
           variant="caption"
           sx={{
-            color: "#64748b",
+            color: "#71717a",
             fontWeight: 700,
             textTransform: "uppercase",
             letterSpacing: "0.06em",
@@ -221,12 +222,12 @@ function Chats() {
         >
           Conversations
         </Typography>
-        <Typography variant="caption" sx={{ color: "#64748b", fontSize: "0.75rem" }}>
+        <Typography variant="caption" sx={{ color: "#71717a", fontSize: "0.75rem" }}>
           {filteredUsers.length}
         </Typography>
       </Box>
 
-      <Divider sx={{ mx: 2, borderColor: "rgba(255, 255, 255, 0.06)" }} />
+      <Divider sx={{ mx: 2, borderColor: "rgba(255, 255, 255, 0.08)" }} />
 
       {/* Conversation List */}
       <List
@@ -248,18 +249,18 @@ function Chats() {
               selected={isSelected}
               onClick={() => handleSelect(userItem.name)}
               sx={{
-                borderRadius: "10px",
+                borderRadius: "8px",
                 padding: "9px 12px",
                 border: "1px solid",
-                borderColor: isSelected ? "rgba(79, 70, 229, 0.4)" : "transparent",
+                borderColor: isSelected ? "rgba(255, 255, 255, 0.3)" : "transparent",
                 backgroundColor: isSelected
-                  ? "rgba(79, 70, 229, 0.15) !important"
+                  ? "rgba(255, 255, 255, 0.1) !important"
                   : "transparent",
                 transition: "all 0.15s ease",
                 "&:hover": {
                   backgroundColor: isSelected
-                    ? "rgba(79, 70, 229, 0.2)"
-                    : "rgba(255, 255, 255, 0.04)",
+                    ? "rgba(255, 255, 255, 0.15)"
+                    : "rgba(255, 255, 255, 0.05)",
                 },
               }}
             >
@@ -270,9 +271,9 @@ function Chats() {
                     height: 36,
                     fontSize: "0.9rem",
                     fontWeight: 700,
-                    bgcolor: isSelected ? "#4f46e5" : "rgba(30, 41, 59, 0.9)",
-                    color: isSelected ? "#ffffff" : "#c7d2fe",
-                    border: "1px solid rgba(255, 255, 255, 0.08)",
+                    bgcolor: isSelected ? "#ffffff" : "#27272a",
+                    color: isSelected ? "#000000" : "#ffffff",
+                    border: "1px solid rgba(255, 255, 255, 0.12)",
                   }}
                 >
                   {getInitials(userItem.name)}
@@ -284,9 +285,9 @@ function Chats() {
                     right: 0,
                     width: 8,
                     height: 8,
-                    bgcolor: "#4f46e5",
+                    bgcolor: "#ffffff",
                     borderRadius: "50%",
-                    border: "2px solid #0b0f19",
+                    border: "2px solid #000000",
                   }}
                 />
               </Box>
@@ -305,7 +306,7 @@ function Chats() {
                     noWrap
                     sx={{
                       fontWeight: isSelected ? 700 : 600,
-                      color: isSelected ? "#ffffff" : "#f1f5f9",
+                      color: "#ffffff",
                       fontSize: "0.875rem",
                     }}
                   >
@@ -316,7 +317,7 @@ function Chats() {
                   variant="caption"
                   noWrap
                   sx={{
-                    color: isSelected ? "#c7d2fe" : "#64748b",
+                    color: isSelected ? "#ffffff" : "#71717a",
                     fontSize: "0.75rem",
                     display: "block",
                   }}
@@ -329,7 +330,7 @@ function Chats() {
         })}
 
         {filteredUsers.length === 0 && (
-          <Box sx={{ p: 3, textAlign: "center", color: "#64748b" }}>
+          <Box sx={{ p: 3, textAlign: "center", color: "#71717a" }}>
             <Typography variant="body2" sx={{ fontSize: "0.85rem" }}>
               No conversations found.
             </Typography>

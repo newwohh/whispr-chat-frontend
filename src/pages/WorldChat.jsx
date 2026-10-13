@@ -80,7 +80,6 @@ function WorldChat() {
       });
     } catch (error) {
       console.error("Failed to post message:", error);
-      // Local optimistic update if backend is offline
       setMessages((prev) => [
         ...prev,
         { username: currentUsername, message: textToSend },
@@ -104,6 +103,7 @@ function WorldChat() {
         alignItems: "center",
         justifyContent: "center",
         p: { xs: 0, md: 3 },
+        backgroundColor: "#000000",
       }}
     >
       <Background />
@@ -112,10 +112,9 @@ function WorldChat() {
         sx={{
           width: { xs: "100%", md: "min(1100px, 94vw)" },
           height: { xs: "100vh", md: "min(860px, 90vh)" },
-          borderRadius: { xs: 0, md: "20px" },
-          backgroundColor: "rgba(19, 25, 38, 0.8)",
-          backdropFilter: "blur(24px)",
-          border: { xs: "none", md: "1px solid rgba(255, 255, 255, 0.08)" },
+          borderRadius: { xs: 0, md: "16px" },
+          backgroundColor: "#09090b",
+          border: { xs: "none", md: "1px solid rgba(255, 255, 255, 0.12)" },
           display: "flex",
           flexDirection: "column",
           overflow: "hidden",
@@ -128,20 +127,19 @@ function WorldChat() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
-            background: "rgba(19, 25, 38, 0.85)",
-            backdropFilter: "blur(16px)",
+            borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+            background: "#09090b",
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
             <IconButton
               onClick={() => navigate(-1)}
               sx={{
-                color: "#94a3b8",
+                color: "#a1a1aa",
                 p: 0.8,
                 borderRadius: "8px",
                 background: "rgba(255, 255, 255, 0.04)",
-                "&:hover": { color: "#ffffff", backgroundColor: "rgba(255, 255, 255, 0.08)" },
+                "&:hover": { color: "#ffffff", backgroundColor: "rgba(255, 255, 255, 0.1)" },
               }}
             >
               <ArrowBackRoundedIcon sx={{ fontSize: 20 }} />
@@ -151,13 +149,13 @@ function WorldChat() {
               sx={{
                 width: 38,
                 height: 38,
-                borderRadius: "10px",
-                backgroundColor: "rgba(79, 70, 229, 0.15)",
-                border: "1px solid rgba(79, 70, 229, 0.3)",
+                borderRadius: "8px",
+                backgroundColor: "rgba(255, 255, 255, 0.08)",
+                border: "1px solid rgba(255, 255, 255, 0.2)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                color: "#818cf8",
+                color: "#ffffff",
               }}
             >
               <PublicRoundedIcon sx={{ fontSize: 20 }} />
@@ -175,13 +173,13 @@ function WorldChat() {
                     height: 18,
                     fontSize: "0.65rem",
                     fontWeight: 800,
-                    backgroundColor: "rgba(79, 70, 229, 0.2)",
-                    color: "#a5b4fc",
-                    border: "1px solid rgba(79, 70, 229, 0.3)",
+                    backgroundColor: "rgba(255, 255, 255, 0.12)",
+                    color: "#ffffff",
+                    border: "1px solid rgba(255, 255, 255, 0.2)",
                   }}
                 />
               </Box>
-              <Typography variant="caption" sx={{ color: "#94a3b8", fontSize: "0.75rem" }}>
+              <Typography variant="caption" sx={{ color: "#a1a1aa", fontSize: "0.75rem" }}>
                 Public global community stream
               </Typography>
             </Box>
@@ -193,8 +191,9 @@ function WorldChat() {
             sx={{
               display: { xs: "none", sm: "inline-flex" },
               fontSize: "0.8rem",
-              color: "#818cf8",
-              borderColor: "rgba(79, 70, 229, 0.3)",
+              color: "#ffffff",
+              borderColor: "rgba(255, 255, 255, 0.25)",
+              "&:hover": { borderColor: "#ffffff" },
             }}
             variant="outlined"
           >
@@ -211,7 +210,7 @@ function WorldChat() {
             display: "flex",
             flexDirection: "column",
             gap: 1.8,
-            background: "rgba(11, 15, 25, 0.5)",
+            background: "#000000",
           }}
         >
           {messages.map((item, index) => {
@@ -221,7 +220,7 @@ function WorldChat() {
                 key={index}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.15 }}
                 style={{
                   display: "flex",
                   justifyContent: isMe ? "flex-end" : "flex-start",
@@ -243,9 +242,9 @@ function WorldChat() {
                       height: 32,
                       fontSize: "0.8rem",
                       fontWeight: 700,
-                      bgcolor: isMe ? "#4f46e5" : "rgba(30, 41, 59, 0.9)",
-                      color: isMe ? "#ffffff" : "#c7d2fe",
-                      border: "1px solid rgba(255, 255, 255, 0.08)",
+                      bgcolor: isMe ? "#ffffff" : "#27272a",
+                      color: isMe ? "#000000" : "#ffffff",
+                      border: "1px solid rgba(255, 255, 255, 0.12)",
                       mb: 0.5,
                     }}
                   >
@@ -256,7 +255,7 @@ function WorldChat() {
                     <Typography
                       variant="caption"
                       sx={{
-                        color: isMe ? "#818cf8" : "#94a3b8",
+                        color: "#a1a1aa",
                         fontSize: "0.72rem",
                         fontWeight: 600,
                         mb: 0.3,
@@ -269,21 +268,28 @@ function WorldChat() {
                     <Box
                       sx={{
                         padding: "10px 16px",
-                        borderRadius: isMe ? "14px 14px 3px 14px" : "14px 14px 14px 3px",
-                        backgroundColor: isMe ? "#4f46e5" : "rgba(30, 41, 59, 0.8)",
-                        border: isMe ? "none" : "1px solid rgba(255, 255, 255, 0.06)",
-                        color: "#ffffff",
+                        borderRadius: isMe ? "12px 12px 3px 12px" : "12px 12px 12px 3px",
+                        backgroundColor: isMe ? "#ffffff" : "#27272a",
+                        border: isMe ? "none" : "1px solid rgba(255, 255, 255, 0.08)",
+                        color: isMe ? "#000000" : "#ffffff",
                         wordBreak: "break-word",
                       }}
                     >
-                      <Typography variant="body2" sx={{ fontSize: "0.92rem", lineHeight: 1.5 }}>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          fontSize: "0.92rem",
+                          lineHeight: 1.5,
+                          fontWeight: isMe ? 500 : 400,
+                        }}
+                      >
                         {item.message}
                       </Typography>
                     </Box>
 
                     {isMe && (
                       <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, mt: 0.3, pr: 0.5 }}>
-                        <DoneAllRoundedIcon sx={{ fontSize: 13, color: "#818cf8" }} />
+                        <DoneAllRoundedIcon sx={{ fontSize: 13, color: "rgba(255, 255, 255, 0.8)" }} />
                       </Box>
                     )}
                   </Box>
@@ -300,9 +306,8 @@ function WorldChat() {
           onSubmit={submit}
           sx={{
             padding: { xs: "12px 14px", sm: "16px 24px" },
-            borderTop: "1px solid rgba(255, 255, 255, 0.08)",
-            background: "rgba(19, 25, 38, 0.85)",
-            backdropFilter: "blur(16px)",
+            borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+            background: "#09090b",
             display: "flex",
             alignItems: "center",
             gap: 1.2,
@@ -322,8 +327,8 @@ function WorldChat() {
             }}
             sx={{
               "& .MuiOutlinedInput-root": {
-                borderRadius: "10px",
-                backgroundColor: "rgba(30, 41, 59, 0.6)",
+                borderRadius: "8px",
+                backgroundColor: "rgba(255, 255, 255, 0.04)",
                 fontSize: "0.92rem",
               },
             }}
@@ -337,12 +342,13 @@ function WorldChat() {
             sx={{
               py: 1.1,
               px: { xs: 2, sm: 3 },
-              borderRadius: "10px",
-              backgroundColor: "#4f46e5",
-              fontWeight: 600,
+              borderRadius: "8px",
+              backgroundColor: "#ffffff",
+              color: "#000000",
+              fontWeight: 700,
               fontSize: "0.875rem",
               "&:hover": {
-                backgroundColor: "#4338ca",
+                backgroundColor: "#e4e4e7",
               },
             }}
           >

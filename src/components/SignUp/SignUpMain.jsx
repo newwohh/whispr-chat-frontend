@@ -97,6 +97,7 @@ function SignUpMain() {
         justifyContent: "center",
         padding: { xs: 2, sm: 3 },
         position: "relative",
+        backgroundColor: "#000000",
       }}
     >
       <Background />
@@ -111,17 +112,16 @@ function SignUpMain() {
           display: "flex",
           alignItems: "center",
           gap: 1,
-          color: "#94a3b8",
+          color: "#a1a1aa",
           textDecoration: "none",
           fontSize: "0.9rem",
           fontWeight: 600,
           padding: "8px 14px",
-          borderRadius: "10px",
-          background: "rgba(19, 25, 38, 0.6)",
-          backdropFilter: "blur(12px)",
-          border: "1px solid rgba(255, 255, 255, 0.08)",
+          borderRadius: "8px",
+          background: "#0e0e11",
+          border: "1px solid rgba(255, 255, 255, 0.12)",
           transition: "all 0.15s ease",
-          "&:hover": { color: "#ffffff", borderColor: "rgba(255, 255, 255, 0.2)" },
+          "&:hover": { color: "#ffffff", borderColor: "rgba(255, 255, 255, 0.3)" },
         }}
       >
         <ArrowBackRoundedIcon sx={{ fontSize: 18 }} />
@@ -137,10 +137,9 @@ function SignUpMain() {
         <Box
           sx={{
             width: "100%",
-            borderRadius: "20px",
-            background: "rgba(19, 25, 38, 0.8)",
-            backdropFilter: "blur(24px)",
-            border: "1px solid rgba(255, 255, 255, 0.08)",
+            borderRadius: "16px",
+            background: "#0e0e11",
+            border: "1px solid rgba(255, 255, 255, 0.12)",
             padding: { xs: "28px 22px", sm: "36px 32px" },
           }}
         >
@@ -150,21 +149,25 @@ function SignUpMain() {
               sx={{
                 width: 44,
                 height: 44,
-                borderRadius: "12px",
-                backgroundColor: "rgba(79, 70, 229, 0.15)",
-                border: "1px solid rgba(79, 70, 229, 0.3)",
+                borderRadius: "10px",
+                backgroundColor: "rgba(255, 255, 255, 0.08)",
+                border: "1px solid rgba(255, 255, 255, 0.2)",
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
                 mb: 1.5,
               }}
             >
-              <img src={logo} alt="Whispr logo" style={{ width: "22px", height: "22px", objectFit: "contain" }} />
+              <img
+                src={logo}
+                alt="Whispr logo"
+                style={{ width: "22px", height: "22px", objectFit: "contain", filter: "brightness(0) invert(1)" }}
+              />
             </Box>
             <Typography variant="h5" sx={{ fontWeight: 800, color: "#ffffff", mb: 0.5 }}>
               Create an account
             </Typography>
-            <Typography variant="body2" sx={{ color: "#94a3b8" }}>
+            <Typography variant="body2" sx={{ color: "#a1a1aa" }}>
               Join Whispr for encrypted, instantaneous messaging
             </Typography>
           </Box>
@@ -174,10 +177,10 @@ function SignUpMain() {
               severity="error"
               sx={{
                 mb: 3,
-                borderRadius: "10px",
-                backgroundColor: "rgba(239, 68, 68, 0.12)",
-                color: "#fca5a5",
-                border: "1px solid rgba(239, 68, 68, 0.25)",
+                borderRadius: "8px",
+                backgroundColor: "rgba(255, 255, 255, 0.05)",
+                color: "#ffffff",
+                border: "1px solid rgba(255, 255, 255, 0.2)",
                 fontSize: "0.85rem",
               }}
             >
@@ -195,7 +198,7 @@ function SignUpMain() {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <PersonOutlineRoundedIcon sx={{ color: "#64748b", fontSize: 20 }} />
+                    <PersonOutlineRoundedIcon sx={{ color: "#71717a", fontSize: 20 }} />
                   </InputAdornment>
                 ),
               }}
@@ -211,7 +214,7 @@ function SignUpMain() {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <EmailOutlinedIcon sx={{ color: "#64748b", fontSize: 20 }} />
+                    <EmailOutlinedIcon sx={{ color: "#71717a", fontSize: 20 }} />
                   </InputAdornment>
                 ),
               }}
@@ -227,7 +230,7 @@ function SignUpMain() {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <LockOutlinedIcon sx={{ color: "#64748b", fontSize: 20 }} />
+                    <LockOutlinedIcon sx={{ color: "#71717a", fontSize: 20 }} />
                   </InputAdornment>
                 ),
                 endAdornment: (
@@ -236,7 +239,7 @@ function SignUpMain() {
                       onClick={() => setShowPassword(!showPassword)}
                       edge="end"
                       size="small"
-                      sx={{ color: "#64748b" }}
+                      sx={{ color: "#71717a" }}
                     >
                       {showPassword ? <VisibilityOffOutlinedIcon sx={{ fontSize: 18 }} /> : <VisibilityOutlinedIcon sx={{ fontSize: 18 }} />}
                     </IconButton>
@@ -255,7 +258,7 @@ function SignUpMain() {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <LockOutlinedIcon sx={{ color: "#64748b", fontSize: 20 }} />
+                    <LockOutlinedIcon sx={{ color: "#71717a", fontSize: 20 }} />
                   </InputAdornment>
                 ),
               }}
@@ -269,30 +272,31 @@ function SignUpMain() {
               sx={{
                 mt: 1,
                 py: 1.3,
-                borderRadius: "10px",
+                borderRadius: "8px",
                 fontSize: "0.95rem",
-                fontWeight: 600,
-                backgroundColor: "#4f46e5",
+                fontWeight: 700,
+                backgroundColor: "#ffffff",
+                color: "#000000",
                 "&:hover": {
-                  backgroundColor: "#4338ca",
+                  backgroundColor: "#e4e4e7",
                 },
               }}
             >
-              {loading ? <CircularProgress size={22} sx={{ color: "#ffffff" }} /> : "Create Account"}
+              {loading ? <CircularProgress size={22} sx={{ color: "#000000" }} /> : "Create Account"}
             </Button>
           </Box>
 
           <Box sx={{ textAlign: "center", mt: 3 }}>
-            <Typography variant="body2" sx={{ color: "#94a3b8", fontSize: "0.875rem" }}>
+            <Typography variant="body2" sx={{ color: "#a1a1aa", fontSize: "0.875rem" }}>
               Already have an account?{" "}
               <Box
                 component={RouterLink}
                 to="/login"
                 sx={{
-                  color: "#818cf8",
-                  textDecoration: "none",
+                  color: "#ffffff",
+                  textDecoration: "underline",
                   fontWeight: 600,
-                  "&:hover": { textDecoration: "underline", color: "#a5b4fc" },
+                  "&:hover": { color: "#e4e4e7" },
                 }}
               >
                 Sign in

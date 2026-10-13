@@ -7,37 +7,16 @@
   z-index: -1;
   pointer-events: none;
   overflow: hidden;
-  background-color: #0b0f19;
-}
-
-.modern-background .glow-orb-primary {
-  position: absolute;
-  top: -150px;
-  right: -100px;
-  width: 650px;
-  height: 650px;
-  border-radius: 50%;
-  filter: blur(140px);
-  background-color: rgba(79, 70, 229, 0.18);
-  will-change: transform;
+  background-color: #000000;
 }
 
 .modern-background .grid-overlay {
   position: absolute;
   inset: 0;
   background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(circle at 50% 40%, black 50%, transparent 90%);
-  -webkit-mask-image: radial-gradient(circle at 50% 40%, black 50%, transparent 90%);
-}
-
-@media (max-width: 768px) {
-  .modern-background .glow-orb-primary {
-    width: 350px;
-    height: 350px;
-    filter: blur(90px);
-    opacity: 0.15;
-  }
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(circle at 50% 50%, black 40%, transparent 95%);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, black 40%, transparent 95%);
 }

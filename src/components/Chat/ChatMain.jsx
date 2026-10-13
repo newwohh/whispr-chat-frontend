@@ -18,6 +18,7 @@ function ChatMain() {
         alignItems: "center",
         justifyContent: "center",
         p: { xs: 0, md: 3 },
+        backgroundColor: "#000000",
       }}
     >
       <Background />
@@ -26,11 +27,9 @@ function ChatMain() {
         sx={{
           width: { xs: "100%", md: "min(1360px, 94vw)" },
           height: { xs: "100vh", md: "min(860px, 90vh)" },
-          borderRadius: { xs: 0, md: "24px" },
-          backgroundColor: "rgba(15, 23, 42, 0.75)",
-          backdropFilter: "blur(24px)",
-          border: { xs: "none", md: "1px solid rgba(255, 255, 255, 0.1)" },
-          boxShadow: { xs: "none", md: "0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 30px rgba(99, 102, 241, 0.1)" },
+          borderRadius: { xs: 0, md: "16px" },
+          backgroundColor: "#09090b",
+          border: { xs: "none", md: "1px solid rgba(255, 255, 255, 0.12)" },
           display: "flex",
           overflow: "hidden",
         }}

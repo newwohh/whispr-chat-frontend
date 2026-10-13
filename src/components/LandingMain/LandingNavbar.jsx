@@ -14,17 +14,17 @@ function LandingNavbar() {
     <motion.header
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
       style={{
         width: "100%",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
         padding: isMobile ? "12px 16px" : "14px 28px",
-        borderRadius: "16px",
-        background: "rgba(19, 25, 38, 0.75)",
+        borderRadius: "14px",
+        background: "rgba(14, 14, 17, 0.8)",
         backdropFilter: "blur(20px)",
-        border: "1px solid rgba(255, 255, 255, 0.08)",
+        border: "1px solid rgba(255, 255, 255, 0.12)",
       }}
     >
       <Box
@@ -41,9 +41,9 @@ function LandingNavbar() {
           sx={{
             width: 36,
             height: 36,
-            borderRadius: "10px",
-            backgroundColor: "rgba(79, 70, 229, 0.15)",
-            border: "1px solid rgba(79, 70, 229, 0.3)",
+            borderRadius: "8px",
+            backgroundColor: "rgba(255, 255, 255, 0.08)",
+            border: "1px solid rgba(255, 255, 255, 0.2)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -52,7 +52,7 @@ function LandingNavbar() {
           <img
             src={logo}
             alt="Whispr logo"
-            style={{ width: "20px", height: "20px", objectFit: "contain" }}
+            style={{ width: "20px", height: "20px", objectFit: "contain", filter: "brightness(0) invert(1)" }}
           />
         </Box>
         <Typography
@@ -73,9 +73,9 @@ function LandingNavbar() {
             height: "20px",
             fontSize: "0.7rem",
             fontWeight: 700,
-            backgroundColor: "rgba(79, 70, 229, 0.15)",
-            color: "#818cf8",
-            border: "1px solid rgba(79, 70, 229, 0.3)",
+            backgroundColor: "rgba(255, 255, 255, 0.1)",
+            color: "#ffffff",
+            border: "1px solid rgba(255, 255, 255, 0.2)",
             display: { xs: "none", sm: "inline-flex" },
           }}
         />
@@ -87,10 +87,10 @@ function LandingNavbar() {
           to="/worldchat"
           startIcon={<PublicIcon sx={{ fontSize: 18 }} />}
           sx={{
-            color: "#94a3b8",
+            color: "#a1a1aa",
             fontSize: "0.875rem",
             display: { xs: "none", md: "inline-flex" },
-            "&:hover": { color: "#ffffff", backgroundColor: "rgba(255, 255, 255, 0.05)" },
+            "&:hover": { color: "#ffffff", backgroundColor: "rgba(255, 255, 255, 0.08)" },
           }}
         >
           World Chat
@@ -101,11 +101,11 @@ function LandingNavbar() {
           to="/login"
           variant="text"
           sx={{
-            color: "#e2e8f0",
+            color: "#e4e4e7",
             fontSize: "0.875rem",
             fontWeight: 600,
             padding: { xs: "6px 12px", sm: "8px 16px" },
-            "&:hover": { color: "#ffffff", backgroundColor: "rgba(255, 255, 255, 0.06)" },
+            "&:hover": { color: "#ffffff", backgroundColor: "rgba(255, 255, 255, 0.08)" },
           }}
         >
           Sign In
@@ -119,12 +119,12 @@ function LandingNavbar() {
           sx={{
             fontSize: "0.875rem",
             padding: { xs: "6px 14px", sm: "8px 18px" },
-            borderRadius: "10px",
-            backgroundColor: "#4f46e5",
-            color: "#ffffff",
-            fontWeight: 600,
+            borderRadius: "8px",
+            backgroundColor: "#ffffff",
+            color: "#000000",
+            fontWeight: 700,
             "&:hover": {
-              backgroundColor: "#4338ca",
+              backgroundColor: "#e4e4e7",
             },
           }}
         >

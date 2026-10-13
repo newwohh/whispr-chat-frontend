@@ -31,6 +31,7 @@ function LandingMain() {
         padding: { xs: "12px 16px", sm: "20px 24px", md: "24px 32px" },
         position: "relative",
         overflowX: "hidden",
+        backgroundColor: "#000000",
       }}
     >
       <Background />
@@ -63,14 +64,14 @@ function LandingMain() {
                 transition={{ duration: 0.5, ease: "easeOut" }}
               >
                 <Chip
-                  icon={<BoltRoundedIcon sx={{ fontSize: "16px !important", color: "#818cf8" }} />}
+                  icon={<BoltRoundedIcon sx={{ fontSize: "16px !important", color: "#ffffff" }} />}
                   label="Fast Realtime Messaging"
                   size="small"
                   sx={{
                     mb: 2.5,
-                    backgroundColor: "rgba(79, 70, 229, 0.12)",
-                    color: "#c7d2fe",
-                    border: "1px solid rgba(79, 70, 229, 0.25)",
+                    backgroundColor: "rgba(255, 255, 255, 0.08)",
+                    color: "#ffffff",
+                    border: "1px solid rgba(255, 255, 255, 0.2)",
                     fontWeight: 600,
                     fontSize: "0.8rem",
                     px: 0.5,
@@ -89,7 +90,7 @@ function LandingMain() {
                   }}
                 >
                   Connect &amp; express{" "}
-                  <Box component="span" sx={{ color: "#818cf8" }}>
+                  <Box component="span" sx={{ color: "#a1a1aa" }}>
                     seamlessly.
                   </Box>
                 </Typography>
@@ -98,7 +99,7 @@ function LandingMain() {
                   variant="body1"
                   sx={{
                     fontSize: { xs: "1rem", sm: "1.125rem" },
-                    color: "#94a3b8",
+                    color: "#a1a1aa",
                     lineHeight: 1.6,
                     mb: 4,
                     maxWidth: "520px",
@@ -123,14 +124,15 @@ function LandingMain() {
                     size="large"
                     endIcon={<ArrowForwardRoundedIcon />}
                     sx={{
-                      backgroundColor: "#4f46e5",
+                      backgroundColor: "#ffffff",
+                      color: "#000000",
                       px: { xs: 3, sm: 4 },
                       py: 1.4,
                       fontSize: "0.95rem",
-                      fontWeight: 600,
-                      borderRadius: "10px",
+                      fontWeight: 700,
+                      borderRadius: "8px",
                       "&:hover": {
-                        backgroundColor: "#4338ca",
+                        backgroundColor: "#e4e4e7",
                       },
                     }}
                   >
@@ -147,13 +149,13 @@ function LandingMain() {
                       px: { xs: 2.5, sm: 3 },
                       py: 1.4,
                       fontSize: "0.95rem",
-                      borderRadius: "10px",
-                      borderColor: "rgba(255, 255, 255, 0.15)",
-                      color: "#f8fafc",
-                      backgroundColor: "rgba(255, 255, 255, 0.03)",
+                      borderRadius: "8px",
+                      borderColor: "rgba(255, 255, 255, 0.2)",
+                      color: "#ffffff",
+                      backgroundColor: "rgba(255, 255, 255, 0.04)",
                       "&:hover": {
-                        backgroundColor: "rgba(255, 255, 255, 0.07)",
-                        borderColor: "rgba(255, 255, 255, 0.3)",
+                        backgroundColor: "rgba(255, 255, 255, 0.1)",
+                        borderColor: "rgba(255, 255, 255, 0.5)",
                       },
                     }}
                   >
@@ -163,20 +165,20 @@ function LandingMain() {
 
                 {/* Social Proof */}
                 <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                  <AvatarGroup max={4} sx={{ "& .MuiAvatar-root": { width: 32, height: 32, fontSize: 13, borderColor: "#0b0f19", bgcolor: "#4f46e5" } }}>
+                  <AvatarGroup max={4} sx={{ "& .MuiAvatar-root": { width: 32, height: 32, fontSize: 13, borderColor: "#000000", bgcolor: "#27272a", color: "#ffffff" } }}>
                     <Avatar>S</Avatar>
                     <Avatar>A</Avatar>
                     <Avatar>E</Avatar>
                     <Avatar>M</Avatar>
                   </AvatarGroup>
-                  <Typography variant="body2" sx={{ color: "#64748b", fontSize: "0.85rem" }}>
+                  <Typography variant="body2" sx={{ color: "#71717a", fontSize: "0.85rem" }}>
                     Private peer-to-peer and global realtime messaging
                   </Typography>
                 </Box>
               </motion.div>
             </Grid>
 
-            {/* Right Clean Mockup */}
+            {/* Right Clean Black & White Mockup */}
             <Grid item xs={12} md={6}>
               <motion.div
                 initial={{ opacity: 0, scale: 0.98, y: 15 }}
@@ -188,10 +190,9 @@ function LandingMain() {
                   sx={{
                     width: "100%",
                     maxWidth: "480px",
-                    borderRadius: "20px",
-                    background: "rgba(19, 25, 38, 0.75)",
-                    backdropFilter: "blur(24px)",
-                    border: "1px solid rgba(255, 255, 255, 0.08)",
+                    borderRadius: "16px",
+                    background: "#0e0e11",
+                    border: "1px solid rgba(255, 255, 255, 0.12)",
                     overflow: "hidden",
                     position: "relative",
                   }}
@@ -204,7 +205,7 @@ function LandingMain() {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      background: "rgba(19, 25, 38, 0.5)",
+                      background: "rgba(255, 255, 255, 0.02)",
                     }}
                   >
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
@@ -213,7 +214,8 @@ function LandingMain() {
                           sx={{
                             width: 38,
                             height: 38,
-                            bgcolor: "#4f46e5",
+                            bgcolor: "#ffffff",
+                            color: "#000000",
                             fontSize: "0.95rem",
                             fontWeight: 700,
                           }}
@@ -227,17 +229,17 @@ function LandingMain() {
                             right: 0,
                             width: 9,
                             height: 9,
-                            bgcolor: "#4f46e5",
+                            bgcolor: "#ffffff",
                             borderRadius: "50%",
-                            border: "2px solid #0b0f19",
+                            border: "2px solid #000000",
                           }}
                         />
                       </Box>
                       <Box>
-                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: "#f8fafc" }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: "#ffffff" }}>
                           Elena Rostova
                         </Typography>
-                        <Typography variant="caption" sx={{ color: "#818cf8", fontSize: "0.75rem" }}>
+                        <Typography variant="caption" sx={{ color: "#a1a1aa", fontSize: "0.75rem" }}>
                           Online
                         </Typography>
                       </Box>
@@ -249,8 +251,9 @@ function LandingMain() {
                       sx={{
                         height: 22,
                         fontSize: "0.7rem",
-                        bgcolor: "rgba(255, 255, 255, 0.06)",
-                        color: "#94a3b8",
+                        bgcolor: "rgba(255, 255, 255, 0.08)",
+                        color: "#a1a1aa",
+                        border: "1px solid rgba(255, 255, 255, 0.1)",
                       }}
                     />
                   </Box>
@@ -259,15 +262,15 @@ function LandingMain() {
                   <Box sx={{ padding: "24px 20px", display: "flex", flexDirection: "column", gap: 2 }}>
                     {/* Incoming Message */}
                     <Box sx={{ display: "flex", gap: 1.2, alignItems: "flex-end" }}>
-                      <Avatar sx={{ width: 28, height: 28, bgcolor: "#4f46e5", fontSize: "0.75rem" }}>E</Avatar>
+                      <Avatar sx={{ width: 28, height: 28, bgcolor: "#27272a", color: "#ffffff", fontSize: "0.75rem" }}>E</Avatar>
                       <Box
                         sx={{
                           maxWidth: "80%",
                           padding: "10px 14px",
-                          borderRadius: "14px 14px 14px 4px",
-                          backgroundColor: "rgba(30, 41, 59, 0.8)",
-                          border: "1px solid rgba(255, 255, 255, 0.06)",
-                          color: "#f1f5f9",
+                          borderRadius: "12px 12px 12px 3px",
+                          backgroundColor: "#27272a",
+                          border: "1px solid rgba(255, 255, 255, 0.08)",
+                          color: "#ffffff",
                           fontSize: "0.9rem",
                         }}
                       >
@@ -275,38 +278,39 @@ function LandingMain() {
                       </Box>
                     </Box>
 
-                    {/* Outgoing Message */}
+                    {/* Outgoing Message (Crisp White with Black Text) */}
                     <Box sx={{ display: "flex", gap: 1.2, alignItems: "flex-end", alignSelf: "flex-end" }}>
                       <Box
                         sx={{
                           maxWidth: "80%",
                           padding: "10px 14px",
-                          borderRadius: "14px 14px 4px 14px",
-                          backgroundColor: "#4f46e5",
-                          color: "#ffffff",
+                          borderRadius: "12px 12px 3px 12px",
+                          backgroundColor: "#ffffff",
+                          color: "#000000",
                           fontSize: "0.9rem",
+                          fontWeight: 500,
                         }}
                       >
-                        Yes! It is completely revamped &mdash; super clean, fast, and responsive.
+                        Yes! Minimal black and white design &mdash; pure focus and clarity.
                       </Box>
-                      <DoneAllRoundedIcon sx={{ fontSize: 16, color: "#818cf8", mb: 0.5 }} />
+                      <DoneAllRoundedIcon sx={{ fontSize: 16, color: "#ffffff", mb: 0.5 }} />
                     </Box>
 
                     {/* Incoming Message 2 */}
                     <Box sx={{ display: "flex", gap: 1.2, alignItems: "flex-end" }}>
-                      <Avatar sx={{ width: 28, height: 28, bgcolor: "#4f46e5", fontSize: "0.75rem" }}>E</Avatar>
+                      <Avatar sx={{ width: 28, height: 28, bgcolor: "#27272a", color: "#ffffff", fontSize: "0.75rem" }}>E</Avatar>
                       <Box
                         sx={{
                           maxWidth: "80%",
                           padding: "10px 14px",
-                          borderRadius: "14px 14px 14px 4px",
-                          backgroundColor: "rgba(30, 41, 59, 0.8)",
-                          border: "1px solid rgba(255, 255, 255, 0.06)",
-                          color: "#f1f5f9",
+                          borderRadius: "12px 12px 12px 3px",
+                          backgroundColor: "#27272a",
+                          border: "1px solid rgba(255, 255, 255, 0.08)",
+                          color: "#ffffff",
                           fontSize: "0.9rem",
                         }}
                       >
-                        Love the two-color palette &mdash; looks sharp and professional.
+                        Sharp and sophisticated. Exactly what it needed.
                       </Box>
                     </Box>
                   </Box>
@@ -316,27 +320,27 @@ function LandingMain() {
                     sx={{
                       padding: "14px 20px",
                       borderTop: "1px solid rgba(255, 255, 255, 0.08)",
-                      background: "rgba(19, 25, 38, 0.4)",
+                      background: "rgba(255, 255, 255, 0.02)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
                     }}
                   >
-                    <Typography variant="body2" sx={{ color: "#64748b", fontSize: "0.875rem" }}>
+                    <Typography variant="body2" sx={{ color: "#71717a", fontSize: "0.875rem" }}>
                       Type a message...
                     </Typography>
                     <Box
                       sx={{
                         width: 32,
                         height: 32,
-                        borderRadius: "8px",
-                        backgroundColor: "#4f46e5",
+                        borderRadius: "6px",
+                        backgroundColor: "#ffffff",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                       }}
                     >
-                      <ArrowForwardRoundedIcon sx={{ fontSize: 16, color: "#ffffff" }} />
+                      <ArrowForwardRoundedIcon sx={{ fontSize: 16, color: "#000000" }} />
                     </Box>
                   </Box>
                 </Box>
@@ -352,14 +356,13 @@ function LandingMain() {
               <Box
                 sx={{
                   padding: 3,
-                  borderRadius: "16px",
-                  background: "rgba(19, 25, 38, 0.6)",
-                  backdropFilter: "blur(16px)",
-                  border: "1px solid rgba(255, 255, 255, 0.06)",
+                  borderRadius: "12px",
+                  background: "#0e0e11",
+                  border: "1px solid rgba(255, 255, 255, 0.1)",
                   height: "100%",
                   transition: "border-color 0.2s ease",
                   "&:hover": {
-                    borderColor: "rgba(79, 70, 229, 0.3)",
+                    borderColor: "rgba(255, 255, 255, 0.3)",
                   },
                 }}
               >
@@ -367,21 +370,21 @@ function LandingMain() {
                   sx={{
                     width: 40,
                     height: 40,
-                    borderRadius: "10px",
-                    bgcolor: "rgba(79, 70, 229, 0.15)",
+                    borderRadius: "8px",
+                    bgcolor: "rgba(255, 255, 255, 0.08)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     mb: 2,
-                    color: "#818cf8",
+                    color: "#ffffff",
                   }}
                 >
                   <BoltRoundedIcon />
                 </Box>
-                <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, color: "#f8fafc" }}>
+                <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, color: "#ffffff" }}>
                   Instant Realtime
                 </Typography>
-                <Typography variant="body2" sx={{ color: "#94a3b8", lineHeight: 1.6 }}>
+                <Typography variant="body2" sx={{ color: "#a1a1aa", lineHeight: 1.6 }}>
                   Sub-millisecond messaging powered by cloud sockets and live firestore subscriptions.
                 </Typography>
               </Box>
@@ -391,14 +394,13 @@ function LandingMain() {
               <Box
                 sx={{
                   padding: 3,
-                  borderRadius: "16px",
-                  background: "rgba(19, 25, 38, 0.6)",
-                  backdropFilter: "blur(16px)",
-                  border: "1px solid rgba(255, 255, 255, 0.06)",
+                  borderRadius: "12px",
+                  background: "#0e0e11",
+                  border: "1px solid rgba(255, 255, 255, 0.1)",
                   height: "100%",
                   transition: "border-color 0.2s ease",
                   "&:hover": {
-                    borderColor: "rgba(79, 70, 229, 0.3)",
+                    borderColor: "rgba(255, 255, 255, 0.3)",
                   },
                 }}
               >
@@ -406,21 +408,21 @@ function LandingMain() {
                   sx={{
                     width: 40,
                     height: 40,
-                    borderRadius: "10px",
-                    bgcolor: "rgba(79, 70, 229, 0.15)",
+                    borderRadius: "8px",
+                    bgcolor: "rgba(255, 255, 255, 0.08)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     mb: 2,
-                    color: "#818cf8",
+                    color: "#ffffff",
                   }}
                 >
                   <PublicRoundedIcon />
                 </Box>
-                <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, color: "#f8fafc" }}>
+                <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, color: "#ffffff" }}>
                   Global World Chat
                 </Typography>
-                <Typography variant="body2" sx={{ color: "#94a3b8", lineHeight: 1.6 }}>
+                <Typography variant="body2" sx={{ color: "#a1a1aa", lineHeight: 1.6 }}>
                   Connect with the wider community in a public live room without friction.
                 </Typography>
               </Box>
@@ -430,14 +432,13 @@ function LandingMain() {
               <Box
                 sx={{
                   padding: 3,
-                  borderRadius: "16px",
-                  background: "rgba(19, 25, 38, 0.6)",
-                  backdropFilter: "blur(16px)",
-                  border: "1px solid rgba(255, 255, 255, 0.06)",
+                  borderRadius: "12px",
+                  background: "#0e0e11",
+                  border: "1px solid rgba(255, 255, 255, 0.1)",
                   height: "100%",
                   transition: "border-color 0.2s ease",
                   "&:hover": {
-                    borderColor: "rgba(79, 70, 229, 0.3)",
+                    borderColor: "rgba(255, 255, 255, 0.3)",
                   },
                 }}
               >
@@ -445,21 +446,21 @@ function LandingMain() {
                   sx={{
                     width: 40,
                     height: 40,
-                    borderRadius: "10px",
-                    bgcolor: "rgba(79, 70, 229, 0.15)",
+                    borderRadius: "8px",
+                    bgcolor: "rgba(255, 255, 255, 0.08)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     mb: 2,
-                    color: "#818cf8",
+                    color: "#ffffff",
                   }}
                 >
                   <LockOutlinedIcon />
                 </Box>
-                <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, color: "#f8fafc" }}>
+                <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, color: "#ffffff" }}>
                   Private &amp; Secure
                 </Typography>
-                <Typography variant="body2" sx={{ color: "#94a3b8", lineHeight: 1.6 }}>
+                <Typography variant="body2" sx={{ color: "#a1a1aa", lineHeight: 1.6 }}>
                   Direct peer-to-peer conversations stored with modern token authentication.
                 </Typography>
               </Box>

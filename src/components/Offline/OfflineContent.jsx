@@ -15,18 +15,16 @@ function OfflineContent() {
   const [open, setOpen] = React.useState(true);
 
   return (
-    <Box sx={{ width: "100%", height: "100vh" }}>
+    <Box sx={{ width: "100%", height: "100vh", backgroundColor: "#000000" }}>
       <Background />
       <Dialog
         open={open}
         onClose={() => setOpen(false)}
         PaperProps={{
           sx: {
-            borderRadius: "20px",
-            backgroundColor: "rgba(15, 23, 42, 0.95)",
-            backdropFilter: "blur(20px)",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
-            boxShadow: "0 25px 50px rgba(0, 0, 0, 0.7)",
+            borderRadius: "14px",
+            backgroundColor: "#0e0e11",
+            border: "1px solid rgba(255, 255, 255, 0.15)",
             padding: 2,
             maxWidth: "460px",
           },
@@ -37,9 +35,9 @@ function OfflineContent() {
             sx={{
               width: 40,
               height: 40,
-              borderRadius: "12px",
-              bgcolor: "rgba(239, 68, 68, 0.15)",
-              color: "#f87171",
+              borderRadius: "8px",
+              bgcolor: "rgba(255, 255, 255, 0.08)",
+              color: "#ffffff",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -52,7 +50,7 @@ function OfflineContent() {
           </Typography>
         </DialogTitle>
         <DialogContent>
-          <Typography variant="body2" sx={{ color: "#94a3b8", lineHeight: 1.6 }}>
+          <Typography variant="body2" sx={{ color: "#a1a1aa", lineHeight: 1.6 }}>
             It looks like your internet connection dropped. Whispr requires an active network to sync messages in real time. Please reconnect to continue chatting.
           </Typography>
         </DialogContent>
@@ -61,10 +59,12 @@ function OfflineContent() {
             onClick={() => window.location.reload()}
             variant="contained"
             sx={{
-              borderRadius: "10px",
-              backgroundColor: "#4f46e5",
+              borderRadius: "8px",
+              backgroundColor: "#ffffff",
+              color: "#000000",
+              fontWeight: 700,
               "&:hover": {
-                backgroundColor: "#4338ca",
+                backgroundColor: "#e4e4e7",
               },
             }}
           >

@@ -24,14 +24,14 @@ function FooterComponents() {
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
         <Box
           sx={{
-            width: 8,
-            height: 8,
+            width: 7,
+            height: 7,
             borderRadius: "50%",
-            backgroundColor: "#10b981",
-            boxShadow: "0 0 8px #10b981",
+            backgroundColor: "#ffffff",
+            boxShadow: "0 0 6px #ffffff",
           }}
         />
-        <Typography variant="body2" sx={{ color: "#94a3b8", fontSize: "0.85rem" }}>
+        <Typography variant="body2" sx={{ color: "#a1a1aa", fontSize: "0.85rem" }}>
           &copy; {new Date().getFullYear()} Whispr. Encrypted &amp; realtime messaging.
         </Typography>
       </Box>
