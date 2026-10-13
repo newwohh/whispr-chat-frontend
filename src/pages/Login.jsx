@@ -1,22 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { titleHandler } from "../actions/actions";
 import LoginMain from "../components/Login/LoginMain";
 import { motion } from "framer-motion";
 
 function Login() {
-  titleHandler("Login");
+  useEffect(() => {
+    titleHandler("Sign In");
+  }, []);
+
   return (
     <motion.div
-      initial={{ x: 300 }}
-      animate={{ x: 0 }}
-      transition={{ duration: 1 }}
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundSize: "cover",
-        height: "100vh",
-      }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      style={{ minHeight: "100vh", width: "100%" }}
     >
       <LoginMain />
     </motion.div>
