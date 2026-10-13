@@ -68,7 +68,7 @@ function Chats() {
         flexDirection: "column",
         height: "100%",
         width: "100%",
-        background: "rgba(15, 23, 42, 0.8)",
+        background: "rgba(19, 25, 38, 0.85)",
         borderRight: "1px solid rgba(255, 255, 255, 0.08)",
       }}
     >
@@ -86,13 +86,12 @@ function Chats() {
           <Box sx={{ position: "relative" }}>
             <Avatar
               sx={{
-                width: 44,
-                height: 44,
-                fontSize: "1.1rem",
+                width: 42,
+                height: 42,
+                fontSize: "1rem",
                 fontWeight: 700,
-                background: "linear-gradient(135deg, #6366f1 0%, #06b6d4 100%)",
+                backgroundColor: "#4f46e5",
                 color: "#ffffff",
-                boxShadow: "0 4px 12px rgba(99, 102, 241, 0.35)",
               }}
             >
               {getInitials(currentUser.name)}
@@ -102,11 +101,11 @@ function Chats() {
                 position: "absolute",
                 bottom: 1,
                 right: 1,
-                width: 10,
-                height: 10,
-                bgcolor: "#10b981",
+                width: 9,
+                height: 9,
+                bgcolor: "#4f46e5",
                 borderRadius: "50%",
-                border: "2px solid #0f172a",
+                border: "2px solid #0b0f19",
               }}
             />
           </Box>
@@ -136,22 +135,22 @@ function Chats() {
         <ListItemButton
           onClick={() => navigate("/worldchat")}
           sx={{
-            borderRadius: "12px",
-            backgroundColor: "rgba(6, 182, 212, 0.08)",
-            border: "1px solid rgba(6, 182, 212, 0.2)",
-            p: "10px 14px",
+            borderRadius: "10px",
+            backgroundColor: "rgba(79, 70, 229, 0.1)",
+            border: "1px solid rgba(79, 70, 229, 0.2)",
+            p: "9px 12px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            transition: "all 0.2s ease",
+            transition: "all 0.15s ease",
             "&:hover": {
-              backgroundColor: "rgba(6, 182, 212, 0.16)",
-              borderColor: "rgba(6, 182, 212, 0.4)",
+              backgroundColor: "rgba(79, 70, 229, 0.18)",
+              borderColor: "rgba(79, 70, 229, 0.35)",
             },
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center", gap: 1.2 }}>
-            <PublicRoundedIcon sx={{ color: "#06b6d4", fontSize: 20 }} />
+            <PublicRoundedIcon sx={{ color: "#818cf8", fontSize: 20 }} />
             <Box>
               <Typography sx={{ color: "#f8fafc", fontSize: "0.85rem", fontWeight: 700 }}>
                 World Chat Room
@@ -168,8 +167,8 @@ function Chats() {
               height: 18,
               fontSize: "0.65rem",
               fontWeight: 800,
-              backgroundColor: "rgba(16, 185, 129, 0.2)",
-              color: "#34d399",
+              backgroundColor: "rgba(79, 70, 229, 0.2)",
+              color: "#a5b4fc",
             }}
           />
         </ListItemButton>
@@ -192,7 +191,7 @@ function Chats() {
           }}
           sx={{
             "& .MuiOutlinedInput-root": {
-              borderRadius: "10px",
+              borderRadius: "8px",
               fontSize: "0.85rem",
               backgroundColor: "rgba(30, 41, 59, 0.4)",
             },
@@ -249,17 +248,17 @@ function Chats() {
               selected={isSelected}
               onClick={() => handleSelect(userItem.name)}
               sx={{
-                borderRadius: "12px",
-                padding: "10px 12px",
+                borderRadius: "10px",
+                padding: "9px 12px",
                 border: "1px solid",
-                borderColor: isSelected ? "rgba(99, 102, 241, 0.4)" : "transparent",
+                borderColor: isSelected ? "rgba(79, 70, 229, 0.4)" : "transparent",
                 backgroundColor: isSelected
-                  ? "rgba(99, 102, 241, 0.15) !important"
+                  ? "rgba(79, 70, 229, 0.15) !important"
                   : "transparent",
                 transition: "all 0.15s ease",
                 "&:hover": {
                   backgroundColor: isSelected
-                    ? "rgba(99, 102, 241, 0.2)"
+                    ? "rgba(79, 70, 229, 0.2)"
                     : "rgba(255, 255, 255, 0.04)",
                 },
               }}
@@ -267,13 +266,13 @@ function Chats() {
               <Box sx={{ position: "relative", mr: 1.5 }}>
                 <Avatar
                   sx={{
-                    width: 38,
-                    height: 38,
-                    fontSize: "0.95rem",
+                    width: 36,
+                    height: 36,
+                    fontSize: "0.9rem",
                     fontWeight: 700,
-                    bgcolor: isSelected ? "#6366f1" : "rgba(30, 41, 59, 0.9)",
-                    color: isSelected ? "#ffffff" : "#a5b4fc",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
+                    bgcolor: isSelected ? "#4f46e5" : "rgba(30, 41, 59, 0.9)",
+                    color: isSelected ? "#ffffff" : "#c7d2fe",
+                    border: "1px solid rgba(255, 255, 255, 0.08)",
                   }}
                 >
                   {getInitials(userItem.name)}
@@ -283,11 +282,11 @@ function Chats() {
                     position: "absolute",
                     bottom: 0,
                     right: 0,
-                    width: 9,
-                    height: 9,
-                    bgcolor: "#10b981",
+                    width: 8,
+                    height: 8,
+                    bgcolor: "#4f46e5",
                     borderRadius: "50%",
-                    border: "2px solid #0f172a",
+                    border: "2px solid #0b0f19",
                   }}
                 />
               </Box>
@@ -298,7 +297,7 @@ function Chats() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    mb: 0.3,
+                    mb: 0.2,
                   }}
                 >
                   <Typography

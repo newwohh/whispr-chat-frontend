@@ -62,7 +62,10 @@ function OfflineContent() {
             variant="contained"
             sx={{
               borderRadius: "10px",
-              background: "linear-gradient(135deg, #6366f1 0%, #06b6d4 100%)",
+              backgroundColor: "#4f46e5",
+              "&:hover": {
+                backgroundColor: "#4338ca",
+              },
             }}
           >
             Retry Connection

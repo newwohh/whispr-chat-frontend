@@ -90,7 +90,7 @@ export default function LongMenu() {
         }}
       >
         <MenuItem onClick={handleWorld}>
-          <ListItemIcon sx={{ color: "#06b6d4", minWidth: 32 }}>
+          <ListItemIcon sx={{ color: "#818cf8", minWidth: 32 }}>
             <PublicRoundedIcon sx={{ fontSize: 18 }} />
           </ListItemIcon>
           <ListItemText primary="World Chat" />

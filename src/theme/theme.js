@@ -4,20 +4,18 @@ export const theme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#6366f1",
-      light: "#818cf8",
-      dark: "#4f46e5",
+      main: "#4f46e5",
+      light: "#6366f1",
+      dark: "#4338ca",
       contrastText: "#ffffff",
     },
     secondary: {
-      main: "#06b6d4",
-      light: "#22d3ee",
-      dark: "#0891b2",
+      main: "#6366f1",
       contrastText: "#ffffff",
     },
     background: {
-      default: "#0a0f1d",
-      paper: "#111827",
+      default: "#0b0f19",
+      paper: "#131926",
     },
     text: {
       primary: "#f8fafc",
@@ -56,27 +54,27 @@ export const theme = createTheme({
     },
   },
   shape: {
-    borderRadius: 14,
+    borderRadius: 12,
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 12,
-          padding: "10px 20px",
+          borderRadius: 10,
+          padding: "9px 18px",
           fontWeight: 600,
           boxShadow: "none",
-          transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+          transition: "all 0.15s ease",
           "&:hover": {
-            boxShadow: "0 8px 20px -4px rgba(99, 102, 241, 0.35)",
-            transform: "translateY(-1px)",
-          },
-          "&:active": {
-            transform: "translateY(0)",
+            boxShadow: "none",
+            transform: "none",
           },
         },
         containedPrimary: {
-          background: "linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)",
+          backgroundColor: "#4f46e5",
+          "&:hover": {
+            backgroundColor: "#4338ca",
+          },
         },
         outlined: {
           borderColor: "rgba(255, 255, 255, 0.15)",
@@ -92,25 +90,25 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           "& .MuiOutlinedInput-root": {
-            borderRadius: 12,
-            backgroundColor: "rgba(15, 23, 42, 0.6)",
+            borderRadius: 10,
+            backgroundColor: "rgba(19, 25, 38, 0.7)",
             backdropFilter: "blur(12px)",
             "& fieldset": {
               borderColor: "rgba(255, 255, 255, 0.1)",
-              transition: "border-color 0.2s ease",
+              transition: "border-color 0.15s ease",
             },
             "&:hover fieldset": {
               borderColor: "rgba(255, 255, 255, 0.25)",
             },
             "&.Mui-focused fieldset": {
-              borderColor: "#6366f1",
+              borderColor: "#4f46e5",
               borderWidth: "1.5px",
             },
           },
           "& .MuiInputLabel-root": {
             color: "#94a3b8",
             "&.Mui-focused": {
-              color: "#818cf8",
+              color: "#6366f1",
             },
           },
         },

@@ -136,16 +136,16 @@ function SendMessage() {
           justifyContent: "center",
           padding: 4,
           textAlign: "center",
-          background: "rgba(10, 15, 29, 0.4)",
+          background: "rgba(11, 15, 25, 0.4)",
         }}
       >
         <Box
           sx={{
-            width: 72,
-            height: 72,
-            borderRadius: "24px",
-            background: "linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%)",
-            border: "1px solid rgba(99, 102, 241, 0.25)",
+            width: 64,
+            height: 64,
+            borderRadius: "16px",
+            backgroundColor: "rgba(79, 70, 229, 0.15)",
+            border: "1px solid rgba(79, 70, 229, 0.25)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -153,7 +153,7 @@ function SendMessage() {
             color: "#818cf8",
           }}
         >
-          <ChatBubbleOutlineRoundedIcon sx={{ fontSize: 36 }} />
+          <ChatBubbleOutlineRoundedIcon sx={{ fontSize: 32 }} />
         </Box>
         <Typography variant="h5" sx={{ fontWeight: 700, color: "#f8fafc", mb: 1 }}>
           Your Whispr Messages
@@ -169,12 +169,12 @@ function SendMessage() {
           startIcon={<PublicRoundedIcon />}
           onClick={() => navigate("/worldchat")}
           sx={{
-            borderRadius: "12px",
-            borderColor: "rgba(6, 182, 212, 0.4)",
-            color: "#22d3ee",
+            borderRadius: "10px",
+            borderColor: "rgba(79, 70, 229, 0.4)",
+            color: "#818cf8",
             "&:hover": {
-              borderColor: "#06b6d4",
-              backgroundColor: "rgba(6, 182, 212, 0.08)",
+              borderColor: "#4f46e5",
+              backgroundColor: "rgba(79, 70, 229, 0.08)",
             },
           }}
         >
@@ -194,7 +194,7 @@ function SendMessage() {
         flexDirection: "column",
         height: "100%",
         width: "100%",
-        background: "rgba(10, 15, 29, 0.6)",
+        background: "rgba(11, 15, 25, 0.6)",
         position: "relative",
       }}
     >
@@ -206,7 +206,7 @@ function SendMessage() {
           alignItems: "center",
           justifyContent: "space-between",
           borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
-          background: "rgba(15, 23, 42, 0.8)",
+          background: "rgba(19, 25, 38, 0.8)",
           backdropFilter: "blur(16px)",
           zIndex: 5,
         }}
@@ -229,11 +229,11 @@ function SendMessage() {
           <Box sx={{ position: "relative" }}>
             <Avatar
               sx={{
-                width: 42,
-                height: 42,
-                fontSize: "1.05rem",
+                width: 40,
+                height: 40,
+                fontSize: "1rem",
                 fontWeight: 700,
-                background: "linear-gradient(135deg, #6366f1 0%, #06b6d4 100%)",
+                backgroundColor: "#4f46e5",
                 color: "#ffffff",
               }}
             >
@@ -244,11 +244,11 @@ function SendMessage() {
                 position: "absolute",
                 bottom: 1,
                 right: 1,
-                width: 10,
-                height: 10,
-                bgcolor: "#10b981",
+                width: 9,
+                height: 9,
+                bgcolor: "#4f46e5",
                 borderRadius: "50%",
-                border: "2px solid #0f172a",
+                border: "2px solid #0b0f19",
               }}
             />
           </Box>
@@ -257,7 +257,7 @@ function SendMessage() {
             <Typography variant="subtitle1" sx={{ fontWeight: 700, color: "#f8fafc", lineHeight: 1.2 }}>
               {selectedName}
             </Typography>
-            <Typography variant="caption" sx={{ color: "#10b981", fontSize: "0.75rem", display: "flex", alignItems: "center", gap: 0.5 }}>
+            <Typography variant="caption" sx={{ color: "#818cf8", fontSize: "0.75rem", display: "flex", alignItems: "center", gap: 0.5 }}>
               ● Online &amp; active
             </Typography>
           </Box>
@@ -292,9 +292,9 @@ function SendMessage() {
             return (
               <motion.div
                 key={msg.id || idx}
-                initial={{ opacity: 0, y: 12, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.2 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.15 }}
                 style={{
                   display: "flex",
                   justifyContent: isMe ? "flex-end" : "flex-start",
@@ -316,9 +316,9 @@ function SendMessage() {
                         width: 28,
                         height: 28,
                         fontSize: "0.75rem",
-                        bgcolor: "rgba(99, 102, 241, 0.3)",
-                        color: "#a5b4fc",
-                        border: "1px solid rgba(255, 255, 255, 0.1)",
+                        bgcolor: "rgba(79, 70, 229, 0.2)",
+                        color: "#c7d2fe",
+                        border: "1px solid rgba(255, 255, 255, 0.08)",
                         mb: 0.5,
                       }}
                     >
@@ -329,17 +329,10 @@ function SendMessage() {
                   <Box
                     sx={{
                       padding: "10px 15px",
-                      borderRadius: isMe ? "18px 18px 4px 18px" : "18px 18px 18px 4px",
-                      background: isMe
-                        ? "linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)"
-                        : "rgba(30, 41, 59, 0.8)",
-                      border: isMe
-                        ? "none"
-                        : "1px solid rgba(255, 255, 255, 0.08)",
+                      borderRadius: isMe ? "14px 14px 3px 14px" : "14px 14px 14px 3px",
+                      backgroundColor: isMe ? "#4f46e5" : "rgba(30, 41, 59, 0.8)",
+                      border: isMe ? "none" : "1px solid rgba(255, 255, 255, 0.06)",
                       color: "#ffffff",
-                      boxShadow: isMe
-                        ? "0 4px 14px rgba(99, 102, 241, 0.25)"
-                        : "0 2px 8px rgba(0, 0, 0, 0.2)",
                       wordBreak: "break-word",
                     }}
                   >
@@ -361,7 +354,7 @@ function SendMessage() {
                           variant="caption"
                           sx={{
                             fontSize: "0.68rem",
-                            color: isMe ? "rgba(255, 255, 255, 0.7)" : "#64748b",
+                            color: isMe ? "rgba(255, 255, 255, 0.75)" : "#64748b",
                           }}
                         >
                           {timeString}
@@ -369,7 +362,7 @@ function SendMessage() {
                       )}
                       {isMe && (
                         <DoneAllRoundedIcon
-                          sx={{ fontSize: 13, color: "rgba(255, 255, 255, 0.8)" }}
+                          sx={{ fontSize: 13, color: "rgba(255, 255, 255, 0.85)" }}
                         />
                       )}
                     </Box>
@@ -387,7 +380,7 @@ function SendMessage() {
         sx={{
           padding: { xs: "12px 14px", sm: "16px 20px" },
           borderTop: "1px solid rgba(255, 255, 255, 0.08)",
-          background: "rgba(15, 23, 42, 0.8)",
+          background: "rgba(19, 25, 38, 0.8)",
           backdropFilter: "blur(16px)",
           position: "relative",
         }}
@@ -399,11 +392,11 @@ function SendMessage() {
               <Box
                 sx={{
                   position: "absolute",
-                  bottom: "80px",
+                  bottom: "75px",
                   left: { xs: "10px", sm: "20px" },
                   zIndex: 20,
-                  boxShadow: "0 20px 50px rgba(0, 0, 0, 0.6)",
-                  borderRadius: "16px",
+                  boxShadow: "0 15px 40px rgba(0, 0, 0, 0.6)",
+                  borderRadius: "14px",
                   overflow: "hidden",
                 }}
               >
@@ -424,7 +417,7 @@ function SendMessage() {
             onClick={() => setShowEmoji(!showEmoji)}
             sx={{
               color: showEmoji ? "#818cf8" : "#94a3b8",
-              backgroundColor: showEmoji ? "rgba(99, 102, 241, 0.15)" : "transparent",
+              backgroundColor: showEmoji ? "rgba(79, 70, 229, 0.15)" : "transparent",
               "&:hover": { color: "#ffffff", backgroundColor: "rgba(255, 255, 255, 0.08)" },
             }}
           >
@@ -446,7 +439,7 @@ function SendMessage() {
             }}
             sx={{
               "& .MuiOutlinedInput-root": {
-                borderRadius: "14px",
+                borderRadius: "10px",
                 backgroundColor: "rgba(30, 41, 59, 0.6)",
                 fontSize: "0.92rem",
               },
@@ -457,19 +450,14 @@ function SendMessage() {
             onClick={handleSend}
             disabled={!text.trim()}
             sx={{
-              width: 42,
-              height: 42,
-              borderRadius: "12px",
-              background: text.trim()
-                ? "linear-gradient(135deg, #6366f1 0%, #06b6d4 100%)"
-                : "rgba(255, 255, 255, 0.06)",
+              width: 40,
+              height: 40,
+              borderRadius: "10px",
+              backgroundColor: text.trim() ? "#4f46e5" : "rgba(255, 255, 255, 0.06)",
               color: text.trim() ? "#ffffff" : "#475569",
-              boxShadow: text.trim() ? "0 4px 14px rgba(99, 102, 241, 0.4)" : "none",
-              transition: "all 0.2s ease",
+              transition: "all 0.15s ease",
               "&:hover": {
-                background: text.trim()
-                  ? "linear-gradient(135deg, #4f46e5 0%, #0891b2 100%)"
-                  : "rgba(255, 255, 255, 0.06)",
+                backgroundColor: text.trim() ? "#4338ca" : "rgba(255, 255, 255, 0.06)",
               },
             }}
           >

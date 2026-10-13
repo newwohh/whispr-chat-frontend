@@ -68,7 +68,6 @@ function LoginMain() {
       }
     } catch (error) {
       console.error("Login request failed:", error);
-      // If backend is unreachable or local development demo
       setErrorMsg("Unable to reach authentication server. Please check your network or try again.");
     } finally {
       setLoading(false);
@@ -123,11 +122,11 @@ function LoginMain() {
           fontSize: "0.9rem",
           fontWeight: 600,
           padding: "8px 14px",
-          borderRadius: "12px",
-          background: "rgba(15, 23, 42, 0.5)",
+          borderRadius: "10px",
+          background: "rgba(19, 25, 38, 0.6)",
           backdropFilter: "blur(12px)",
           border: "1px solid rgba(255, 255, 255, 0.08)",
-          transition: "all 0.2s ease",
+          transition: "all 0.15s ease",
           "&:hover": { color: "#ffffff", borderColor: "rgba(255, 255, 255, 0.2)" },
         }}
       >
@@ -136,38 +135,37 @@ function LoginMain() {
       </Box>
 
       <motion.div
-        initial={{ opacity: 0, scale: 0.96, y: 15 }}
+        initial={{ opacity: 0, scale: 0.98, y: 15 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-        style={{ width: "100%", maxWidth: "460px" }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
+        style={{ width: "100%", maxWidth: "440px" }}
       >
         <Box
           sx={{
             width: "100%",
-            borderRadius: "28px",
-            background: "rgba(15, 23, 42, 0.75)",
+            borderRadius: "20px",
+            background: "rgba(19, 25, 38, 0.8)",
             backdropFilter: "blur(24px)",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
-            boxShadow: "0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 40px rgba(99, 102, 241, 0.12)",
-            padding: { xs: "28px 22px", sm: "40px 36px" },
+            border: "1px solid rgba(255, 255, 255, 0.08)",
+            padding: { xs: "28px 22px", sm: "36px 32px" },
           }}
         >
           {/* Logo & Header */}
           <Box sx={{ textAlign: "center", mb: 3.5 }}>
             <Box
               sx={{
-                width: 48,
-                height: 48,
-                borderRadius: "14px",
-                background: "linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(6, 182, 212, 0.2) 100%)",
-                border: "1px solid rgba(99, 102, 241, 0.3)",
+                width: 44,
+                height: 44,
+                borderRadius: "12px",
+                backgroundColor: "rgba(79, 70, 229, 0.15)",
+                border: "1px solid rgba(79, 70, 229, 0.3)",
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
                 mb: 1.5,
               }}
             >
-              <img src={logo} alt="Whispr logo" style={{ width: "26px", height: "26px", objectFit: "contain" }} />
+              <img src={logo} alt="Whispr logo" style={{ width: "22px", height: "22px", objectFit: "contain" }} />
             </Box>
             <Typography variant="h5" sx={{ fontWeight: 800, color: "#ffffff", mb: 0.5 }}>
               Welcome back
@@ -182,7 +180,7 @@ function LoginMain() {
               severity="error"
               sx={{
                 mb: 3,
-                borderRadius: "12px",
+                borderRadius: "10px",
                 backgroundColor: "rgba(239, 68, 68, 0.12)",
                 color: "#fca5a5",
                 border: "1px solid rgba(239, 68, 68, 0.25)",
@@ -193,7 +191,7 @@ function LoginMain() {
             </Alert>
           )}
 
-          <Box component="form" onSubmit={loginHandler} sx={{ display: "flex", flexDirection: "column", gap: 2.2 }}>
+          <Box component="form" onSubmit={loginHandler} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <TextField
               fullWidth
               label="Email or Username"
@@ -244,14 +242,13 @@ function LoginMain() {
               disabled={loading}
               sx={{
                 mt: 1,
-                py: 1.4,
-                borderRadius: "14px",
+                py: 1.3,
+                borderRadius: "10px",
                 fontSize: "0.95rem",
-                fontWeight: 700,
-                background: "linear-gradient(135deg, #6366f1 0%, #06b6d4 100%)",
-                boxShadow: "0 8px 20px -4px rgba(99, 102, 241, 0.4)",
+                fontWeight: 600,
+                backgroundColor: "#4f46e5",
                 "&:hover": {
-                  background: "linear-gradient(135deg, #4f46e5 0%, #0891b2 100%)",
+                  backgroundColor: "#4338ca",
                 },
               }}
             >
@@ -268,14 +265,14 @@ function LoginMain() {
                 color: "#818cf8",
                 fontSize: "0.8rem",
                 textTransform: "none",
-                "&:hover": { backgroundColor: "rgba(99, 102, 241, 0.08)" },
+                "&:hover": { backgroundColor: "rgba(79, 70, 229, 0.08)" },
               }}
             >
-              ⚡ Or explore as Guest / Demo
+              Or explore as Guest / Demo
             </Button>
           </Box>
 
-          <Divider sx={{ my: 3, borderColor: "rgba(255, 255, 255, 0.08)", "&::before, &::after": { borderColor: "rgba(255, 255, 255, 0.08)" } }}>
+          <Divider sx={{ my: 3, borderColor: "rgba(255, 255, 255, 0.08)" }}>
             <Typography variant="caption" sx={{ color: "#64748b", px: 1 }}>
               or continue with
             </Typography>
@@ -315,7 +312,7 @@ function LoginMain() {
             </GoogleOAuthProvider>
           </Box>
 
-          <Box sx={{ textAlign: "center", mt: 3.5 }}>
+          <Box sx={{ textAlign: "center", mt: 3 }}>
             <Typography variant="body2" sx={{ color: "#94a3b8", fontSize: "0.875rem" }}>
               Don&apos;t have an account?{" "}
               <Box
