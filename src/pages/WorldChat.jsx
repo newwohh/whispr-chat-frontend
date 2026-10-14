@@ -7,53 +7,76 @@ import {
   IconButton,
   TextField,
   Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
 import { motion } from "framer-motion";
+import { v4 as uuid } from "uuid";
 import Background from "../components/Background/Background";
 import { ChatsContext } from "../context/ChatContext";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import PublicRoundedIcon from "@mui/icons-material/PublicRounded";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import DoneAllRoundedIcon from "@mui/icons-material/DoneAllRounded";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import { useNavigate } from "react-router-dom";
 import { titleHandler } from "../actions/actions";
-import { createChatSocket, fetchRoomMessages } from "../services/chatSocket";
+import { createChatSocket, fetchRoomMessages, formatMessageTime } from "../services/chatSocket";
 import { backendBaseUrl } from "../constants/constants";
 
 function WorldChat() {
-  const { user } = useContext(ChatsContext);
+  const { user, setUser } = useContext(ChatsContext);
   const [messages, setMessages] = useState([
-    { username: "System", message: "Welcome to Whispr World Chat! Say hello to the globe." },
+    {
+      id: "system-welcome",
+      username: "System",
+      message: "Welcome to Whispr World Chat! Say hello to the globe.",
+      date: new Date().toISOString(),
+    },
   ]);
   const [message, setMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
+  const [editNameOpen, setEditNameOpen] = useState(false);
+  const [tempName, setTempName] = useState("");
+
   const messagesEndRef = useRef(null);
   const chatSocketRef = useRef(null);
   const navigate = useNavigate();
 
-  const currentUsername = user?.user?.name || "Guest";
+  // Determine current active username
+  const currentUsername =
+    user?.user?.name || user?.name || user?.username || "Guest";
 
   useEffect(() => {
     titleHandler("World Chat");
 
-    // Load initial message history from MongoDB via REST API
+    // 1. Fetch initial message history from MongoDB
     fetchRoomMessages("world").then((history) => {
       if (history && history.length > 0) {
         const formattedHistory = history.map((m) => ({
-          id: m.id,
+          id: m.id || uuid(),
           username: m.senderId || m.username || "Anonymous",
           message: m.text || m.message,
           date: m.date,
+          pending: false,
         }));
+
         setMessages([
-          { username: "System", message: "Welcome to Whispr World Chat! Say hello to the globe." },
+          {
+            id: "system-welcome",
+            username: "System",
+            message: "Welcome to Whispr World Chat! Say hello to the globe.",
+            date: new Date().toISOString(),
+          },
           ...formattedHistory,
         ]);
       }
     });
 
-    // Establish WebSocket connection for real-time messaging
+    // 2. Establish real-time WebSocket connection to 'world' room
     chatSocketRef.current = createChatSocket("world", {
       onConnect: () => {
         setIsConnected(true);
@@ -63,18 +86,37 @@ function WorldChat() {
       },
       onMessage: (data) => {
         const incomingText = data.text || data.message;
-        const incomingUser = data.username || data.senderId;
-        if (incomingText) {
-          setMessages((prev) => [
+        const incomingUser = data.username || data.senderId || "Anonymous";
+        if (!incomingText) return;
+
+        setMessages((prev) => {
+          // Check if message with this ID already exists (e.g. from optimistic send)
+          if (data.id) {
+            const existingIdx = prev.findIndex((m) => m.id === data.id);
+            if (existingIdx !== -1) {
+              const updated = [...prev];
+              updated[existingIdx] = {
+                id: data.id,
+                username: incomingUser,
+                message: incomingText,
+                date: data.date,
+                pending: false,
+              };
+              return updated;
+            }
+          }
+
+          return [
             ...prev,
             {
-              id: data.id,
+              id: data.id || uuid(),
               username: incomingUser,
               message: incomingText,
               date: data.date,
+              pending: false,
             },
-          ]);
-        }
+          ];
+        });
       },
     });
 
@@ -97,37 +139,75 @@ function WorldChat() {
     setMessage("");
     setIsSending(true);
 
+    const clientMsgId = uuid();
+    const nowIso = new Date().toISOString();
+
+    // 1. Optimistic UI update - message appears immediately
+    const optimisticMessage = {
+      id: clientMsgId,
+      username: currentUsername,
+      message: textToSend,
+      date: nowIso,
+      pending: true,
+    };
+
+    setMessages((prev) => [...prev, optimisticMessage]);
+
     try {
-      // Send directly over real-time WebSocket if connected
-      const sentOverSocket = chatSocketRef.current?.send({
+      const payload = {
+        id: clientMsgId,
         text: textToSend,
         message: textToSend,
         senderId: currentUsername,
         username: currentUsername,
         room: "world",
-      });
+        date: nowIso,
+      };
 
-      // If WebSocket is not ready, fall back to REST API (which also broadcasts over WS)
+      // 2. Send over WebSocket if connected
+      const sentOverSocket = chatSocketRef.current?.send(payload);
+
+      // 3. Fallback to REST API if WebSocket is not currently open
       if (!sentOverSocket) {
-        await fetch(backendBaseUrl + "/api/messages/", {
+        const res = await fetch(`${backendBaseUrl}/api/messages/`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            username: currentUsername,
-            message: textToSend,
-            room: "world",
-          }),
+          body: JSON.stringify(payload),
         });
+
+        if (res.ok) {
+          setMessages((prev) =>
+            prev.map((m) => (m.id === clientMsgId ? { ...m, pending: false } : m))
+          );
+        }
       }
     } catch (error) {
-      console.error("Failed to post message:", error);
-      setMessages((prev) => [
-        ...prev,
-        { username: currentUsername, message: textToSend },
-      ]);
+      console.error("Failed to dispatch global message:", error);
     } finally {
       setIsSending(false);
     }
+  };
+
+  const handleUpdateName = () => {
+    if (tempName.trim()) {
+      const trimmed = tempName.trim();
+      const updatedUser = {
+        ...(user || {}),
+        user: {
+          ...(user?.user || {}),
+          name: trimmed,
+        },
+      };
+      if (setUser) {
+        setUser(updatedUser);
+      }
+      try {
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+      } catch (err) {
+        // ignore
+      }
+    }
+    setEditNameOpen(false);
   };
 
   const getInitials = (name) => {
@@ -208,15 +288,15 @@ function WorldChat() {
                   World Chat
                 </Typography>
                 <Chip
-                  label={isConnected ? "LIVE" : "CONNECTING"}
+                  label={isConnected ? "LIVE" : "RECONNECTING"}
                   size="small"
                   sx={{
                     height: 18,
                     fontSize: "0.65rem",
                     fontWeight: 800,
-                    backgroundColor: isConnected ? "rgba(34, 197, 94, 0.2)" : "rgba(255, 255, 255, 0.12)",
-                    color: isConnected ? "#4ade80" : "#ffffff",
-                    border: `1px solid ${isConnected ? "rgba(74, 222, 128, 0.3)" : "rgba(255, 255, 255, 0.2)"}`,
+                    backgroundColor: isConnected ? "rgba(34, 197, 94, 0.2)" : "rgba(239, 68, 68, 0.2)",
+                    color: isConnected ? "#4ade80" : "#f87171",
+                    border: `1px solid ${isConnected ? "rgba(74, 222, 128, 0.3)" : "rgba(239, 68, 68, 0.3)"}`,
                   }}
                 />
               </Box>
@@ -226,20 +306,40 @@ function WorldChat() {
             </Box>
           </Box>
 
-          <Button
-            size="small"
-            onClick={() => navigate("/chat")}
-            sx={{
-              display: { xs: "none", sm: "inline-flex" },
-              fontSize: "0.8rem",
-              color: "#ffffff",
-              borderColor: "rgba(255, 255, 255, 0.25)",
-              "&:hover": { borderColor: "#ffffff" },
-            }}
-            variant="outlined"
-          >
-            Direct Messages
-          </Button>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+            {/* Active user handle chip */}
+            <Chip
+              onClick={() => {
+                setTempName(currentUsername);
+                setEditNameOpen(true);
+              }}
+              icon={<EditRoundedIcon sx={{ fontSize: "14px !important", color: "#a1a1aa" }} />}
+              label={`@${currentUsername}`}
+              size="small"
+              sx={{
+                cursor: "pointer",
+                backgroundColor: "rgba(255, 255, 255, 0.06)",
+                color: "#ffffff",
+                border: "1px solid rgba(255, 255, 255, 0.15)",
+                "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.12)" },
+              }}
+            />
+
+            <Button
+              size="small"
+              onClick={() => navigate("/chat")}
+              sx={{
+                display: { xs: "none", sm: "inline-flex" },
+                fontSize: "0.8rem",
+                color: "#ffffff",
+                borderColor: "rgba(255, 255, 255, 0.25)",
+                "&:hover": { borderColor: "#ffffff" },
+              }}
+              variant="outlined"
+            >
+              Direct Messages
+            </Button>
+          </Box>
         </Box>
 
         {/* Message Stream */}
@@ -256,6 +356,8 @@ function WorldChat() {
         >
           {messages.map((item, index) => {
             const isMe = item.username === currentUsername;
+            const timeStr = formatMessageTime(item.date);
+
             return (
               <motion.div
                 key={item.id || index}
@@ -326,13 +428,37 @@ function WorldChat() {
                       >
                         {item.message}
                       </Typography>
-                    </Box>
 
-                    {isMe && (
-                      <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, mt: 0.3, pr: 0.5 }}>
-                        <DoneAllRoundedIcon sx={{ fontSize: 13, color: "rgba(255, 255, 255, 0.8)" }} />
-                      </Box>
-                    )}
+                      {timeStr && (
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "flex-end",
+                            gap: 0.5,
+                            mt: 0.4,
+                          }}
+                        >
+                          <Typography
+                            variant="caption"
+                            sx={{
+                              fontSize: "0.68rem",
+                              color: isMe ? "rgba(0, 0, 0, 0.6)" : "#a1a1aa",
+                            }}
+                          >
+                            {timeStr}
+                          </Typography>
+                          {isMe && (
+                            <DoneAllRoundedIcon
+                              sx={{
+                                fontSize: 13,
+                                color: item.pending ? "rgba(0,0,0,0.3)" : "rgba(0, 0, 0, 0.7)",
+                              }}
+                            />
+                          )}
+                        </Box>
+                      )}
+                    </Box>
                   </Box>
                 </Box>
               </motion.div>
@@ -357,7 +483,7 @@ function WorldChat() {
           <TextField
             fullWidth
             size="small"
-            placeholder="Broadcast a message to everyone..."
+            placeholder={`Broadcast as @${currentUsername}...`}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={(e) => {
@@ -397,6 +523,63 @@ function WorldChat() {
           </Button>
         </Box>
       </Box>
+
+      {/* Nickname Edit Modal */}
+      <Dialog
+        open={editNameOpen}
+        onClose={() => setEditNameOpen(false)}
+        PaperProps={{
+          sx: {
+            backgroundColor: "#18181b",
+            color: "#ffffff",
+            borderRadius: "14px",
+            border: "1px solid rgba(255, 255, 255, 0.15)",
+            p: 1,
+            minWidth: 300,
+          },
+        }}
+      >
+        <DialogTitle sx={{ fontWeight: 700, fontSize: "1.1rem" }}>
+          Change Nickname
+        </DialogTitle>
+        <DialogContent>
+          <Typography variant="body2" sx={{ color: "#a1a1aa", mb: 2 }}>
+            Choose a display handle for the World Chat room:
+          </Typography>
+          <TextField
+            fullWidth
+            autoFocus
+            size="small"
+            value={tempName}
+            onChange={(e) => setTempName(e.target.value)}
+            placeholder="e.g. Neo, CyberNinja..."
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "8px",
+                backgroundColor: "rgba(255, 255, 255, 0.05)",
+                color: "#ffffff",
+              },
+            }}
+          />
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 2 }}>
+          <Button onClick={() => setEditNameOpen(false)} sx={{ color: "#a1a1aa" }}>
+            Cancel
+          </Button>
+          <Button
+            onClick={handleUpdateName}
+            variant="contained"
+            sx={{
+              backgroundColor: "#ffffff",
+              color: "#000000",
+              fontWeight: 700,
+              "&:hover": { backgroundColor: "#e4e4e7" },
+            }}
+          >
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }
