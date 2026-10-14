@@ -9,16 +9,6 @@ import {
   ClickAwayListener,
   Button,
 } from "@mui/material";
-import {
-  Timestamp,
-  arrayUnion,
-  doc,
-  getDoc,
-  onSnapshot,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
-import { db } from "../../config/firebase";
 import { v4 as uuid } from "uuid";
 import { ChatsContext } from "../../context/ChatContext";
 import { motion, AnimatePresence } from "framer-motion";
@@ -30,13 +20,17 @@ import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineR
 import DoneAllRoundedIcon from "@mui/icons-material/DoneAllRounded";
 import PublicRoundedIcon from "@mui/icons-material/PublicRounded";
 import { useNavigate } from "react-router-dom";
+import { createChatSocket, fetchRoomMessages } from "../../services/chatSocket";
+import { backendBaseUrl } from "../../constants/constants";
 
 function SendMessage() {
   const [showEmoji, setShowEmoji] = useState(false);
   const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);
+  const [isConnected, setIsConnected] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const socketRef = useRef(null);
   const { selectedUser, setSelectedUser } = useContext(UserContext);
   const { user } = useContext(ChatsContext);
   const navigate = useNavigate();
@@ -50,22 +44,56 @@ function SendMessage() {
       return;
     }
 
-    const unsub = onSnapshot(
-      doc(db, "chats", selectedUser.selectedUid),
-      (docSnapshot) => {
-        if (docSnapshot.exists()) {
-          const data = docSnapshot.data();
-          setMessages(Array.isArray(data.messages) ? data.messages : []);
-        } else {
-          setMessages([]);
+    const roomId = selectedUser.selectedUid;
+
+    // 1. Fetch initial message history from MongoDB
+    fetchRoomMessages(roomId).then((history) => {
+      if (history) {
+        setMessages(
+          history.map((m) => ({
+            id: m.id,
+            text: m.text || m.message,
+            senderId: m.senderId || m.username,
+            date: m.date,
+          }))
+        );
+      }
+    });
+
+    // 2. Connect to real-time WebSocket for this direct conversation
+    socketRef.current = createChatSocket(roomId, {
+      onConnect: () => {
+        setIsConnected(true);
+      },
+      onDisconnect: () => {
+        setIsConnected(false);
+      },
+      onMessage: (data) => {
+        const msgText = data.text || data.message;
+        const sender = data.senderId || data.username;
+        if (msgText) {
+          setMessages((prev) => {
+            // Avoid duplicate message if ID already exists
+            if (data.id && prev.some((m) => m.id === data.id)) return prev;
+            return [
+              ...prev,
+              {
+                id: data.id || uuid(),
+                text: msgText,
+                senderId: sender,
+                date: data.date,
+              },
+            ];
+          });
         }
       },
-      (error) => {
-        console.error("Firestore listener error:", error);
-      }
-    );
+    });
 
-    return () => unsub();
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.close();
+      }
+    };
   }, [selectedUser, isUserSelected]);
 
   useEffect(() => {
@@ -78,28 +106,32 @@ function SendMessage() {
     const messageText = text.trim();
     setText("");
 
+    const msgPayload = {
+      id: uuid(),
+      text: messageText,
+      message: messageText,
+      senderId: currentUser,
+      username: currentUser,
+      recipientId: selectedUser.name,
+      date: new Date().toISOString(),
+    };
+
     try {
-      const chatDocRef = doc(db, "chats", selectedUser.selectedUid);
-      const res = await getDoc(chatDocRef);
+      // Send directly over WebSocket
+      const sent = socketRef.current?.send(msgPayload);
 
-      const newMessage = {
-        id: uuid(),
-        text: messageText,
-        senderId: currentUser,
-        date: Timestamp.now(),
-      };
-
-      if (!res.exists()) {
-        await setDoc(chatDocRef, {
-          messages: [newMessage],
-        });
-      } else {
-        await updateDoc(chatDocRef, {
-          messages: arrayUnion(newMessage),
+      // If socket not yet ready, post to REST endpoint (which persists in MongoDB and broadcasts)
+      if (!sent) {
+        await fetch(`${backendBaseUrl}/api/chats/${selectedUser.selectedUid}/messages/`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(msgPayload),
         });
       }
     } catch (error) {
       console.error("Failed to send message:", error);
+      // Optimistic update
+      setMessages((prev) => [...prev, msgPayload]);
     }
   };
 
@@ -112,6 +144,9 @@ function SendMessage() {
   const formatMessageTime = (dateObj) => {
     if (!dateObj) return "";
     try {
+      if (typeof dateObj === "string" || typeof dateObj === "number") {
+        return new Date(dateObj).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+      }
       if (typeof dateObj.toDate === "function") {
         return dateObj.toDate().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
       }
@@ -245,7 +280,7 @@ function SendMessage() {
                 right: 1,
                 width: 9,
                 height: 9,
-                bgcolor: "#ffffff",
+                bgcolor: isConnected ? "#4ade80" : "#ffffff",
                 borderRadius: "50%",
                 border: "2px solid #000000",
               }}
@@ -256,8 +291,8 @@ function SendMessage() {
             <Typography variant="subtitle1" sx={{ fontWeight: 700, color: "#ffffff", lineHeight: 1.2 }}>
               {selectedName}
             </Typography>
-            <Typography variant="caption" sx={{ color: "#a1a1aa", fontSize: "0.75rem", display: "flex", alignItems: "center", gap: 0.5 }}>
-              ● Online &amp; active
+            <Typography variant="caption" sx={{ color: isConnected ? "#4ade80" : "#a1a1aa", fontSize: "0.75rem", display: "flex", alignItems: "center", gap: 0.5 }}>
+              ● {isConnected ? "Connected live" : "Connecting..."}
             </Typography>
           </Box>
         </Box>

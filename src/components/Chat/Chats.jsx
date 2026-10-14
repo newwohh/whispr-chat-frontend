@@ -12,8 +12,6 @@ import {
 import React, { useContext, useState } from "react";
 import { ChatsContext } from "../../context/ChatContext";
 import { UserContext } from "../../context/UserContext";
-import { db } from "../../config/firebase";
-import { getDoc, setDoc, doc } from "firebase/firestore";
 import LongMenu from "./Menu";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import PublicRoundedIcon from "@mui/icons-material/PublicRounded";
@@ -39,21 +37,13 @@ function Chats() {
     u.name?.toLowerCase().includes(search.toLowerCase())
   );
 
-  const handleSelect = async (currName) => {
+  const handleSelect = (currName) => {
     const twovtwochat = (currentUser.name || "user") + currName;
     const userSelected = twovtwochat.split("").sort().join("");
     setSelectedUser({
       selectedUid: userSelected,
       name: currName,
     });
-    try {
-      const res = await getDoc(doc(db, "chats", userSelected));
-      if (!res.exists()) {
-        await setDoc(doc(db, "chats", userSelected), { messages: [] });
-      }
-    } catch (error) {
-      console.error("Firestore chat init error:", error);
-    }
   };
 
   const getInitials = (name) => {
