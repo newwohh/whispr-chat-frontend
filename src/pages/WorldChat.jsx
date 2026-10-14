@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import Pusher from "pusher-js";
 import {
   Avatar,
   Box,
@@ -17,8 +16,9 @@ import PublicRoundedIcon from "@mui/icons-material/PublicRounded";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import DoneAllRoundedIcon from "@mui/icons-material/DoneAllRounded";
 import { useNavigate } from "react-router-dom";
-import { backendBaseUrl } from "../constants/constants";
 import { titleHandler } from "../actions/actions";
+import { createChatSocket, fetchRoomMessages } from "../services/chatSocket";
+import { backendBaseUrl } from "../constants/constants";
 
 function WorldChat() {
   const { user } = useContext(ChatsContext);
@@ -27,7 +27,9 @@ function WorldChat() {
   ]);
   const [message, setMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
   const messagesEndRef = useRef(null);
+  const chatSocketRef = useRef(null);
   const navigate = useNavigate();
 
   const currentUsername = user?.user?.name || "Guest";
@@ -35,26 +37,52 @@ function WorldChat() {
   useEffect(() => {
     titleHandler("World Chat");
 
-    let pusher;
-    try {
-      pusher = new Pusher("cbdd104b9a7b8c257cca", {
-        cluster: "ap2",
-      });
-      const channel = pusher.subscribe("whispr");
-      channel.bind("message", (data) => {
-        if (data && data.message) {
-          setMessages((prev) => [...prev, data]);
-        }
-      });
+    // Load initial message history from MongoDB via REST API
+    fetchRoomMessages("world").then((history) => {
+      if (history && history.length > 0) {
+        const formattedHistory = history.map((m) => ({
+          id: m.id,
+          username: m.senderId || m.username || "Anonymous",
+          message: m.text || m.message,
+          date: m.date,
+        }));
+        setMessages([
+          { username: "System", message: "Welcome to Whispr World Chat! Say hello to the globe." },
+          ...formattedHistory,
+        ]);
+      }
+    });
 
-      return () => {
-        channel.unbind_all();
-        channel.unsubscribe();
-        pusher.disconnect();
-      };
-    } catch (e) {
-      console.error("Pusher connection error:", e);
-    }
+    // Establish WebSocket connection for real-time messaging
+    chatSocketRef.current = createChatSocket("world", {
+      onConnect: () => {
+        setIsConnected(true);
+      },
+      onDisconnect: () => {
+        setIsConnected(false);
+      },
+      onMessage: (data) => {
+        const incomingText = data.text || data.message;
+        const incomingUser = data.username || data.senderId;
+        if (incomingText) {
+          setMessages((prev) => [
+            ...prev,
+            {
+              id: data.id,
+              username: incomingUser,
+              message: incomingText,
+              date: data.date,
+            },
+          ]);
+        }
+      },
+    });
+
+    return () => {
+      if (chatSocketRef.current) {
+        chatSocketRef.current.close();
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -70,14 +98,27 @@ function WorldChat() {
     setIsSending(true);
 
     try {
-      await fetch(backendBaseUrl + "/api/messages/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: currentUsername,
-          message: textToSend,
-        }),
+      // Send directly over real-time WebSocket if connected
+      const sentOverSocket = chatSocketRef.current?.send({
+        text: textToSend,
+        message: textToSend,
+        senderId: currentUsername,
+        username: currentUsername,
+        room: "world",
       });
+
+      // If WebSocket is not ready, fall back to REST API (which also broadcasts over WS)
+      if (!sentOverSocket) {
+        await fetch(backendBaseUrl + "/api/messages/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: currentUsername,
+            message: textToSend,
+            room: "world",
+          }),
+        });
+      }
     } catch (error) {
       console.error("Failed to post message:", error);
       setMessages((prev) => [
@@ -167,20 +208,20 @@ function WorldChat() {
                   World Chat
                 </Typography>
                 <Chip
-                  label="LIVE"
+                  label={isConnected ? "LIVE" : "CONNECTING"}
                   size="small"
                   sx={{
                     height: 18,
                     fontSize: "0.65rem",
                     fontWeight: 800,
-                    backgroundColor: "rgba(255, 255, 255, 0.12)",
-                    color: "#ffffff",
-                    border: "1px solid rgba(255, 255, 255, 0.2)",
+                    backgroundColor: isConnected ? "rgba(34, 197, 94, 0.2)" : "rgba(255, 255, 255, 0.12)",
+                    color: isConnected ? "#4ade80" : "#ffffff",
+                    border: `1px solid ${isConnected ? "rgba(74, 222, 128, 0.3)" : "rgba(255, 255, 255, 0.2)"}`,
                   }}
                 />
               </Box>
               <Typography variant="caption" sx={{ color: "#a1a1aa", fontSize: "0.75rem" }}>
-                Public global community stream
+                Public global community stream backed by MongoDB & WebSockets
               </Typography>
             </Box>
           </Box>
@@ -217,7 +258,7 @@ function WorldChat() {
             const isMe = item.username === currentUsername;
             return (
               <motion.div
-                key={index}
+                key={item.id || index}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.15 }}
