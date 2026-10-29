@@ -18,7 +18,7 @@ import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineR
 import BoltRoundedIcon from "@mui/icons-material/BoltRounded";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import PublicRoundedIcon from "@mui/icons-material/PublicRounded";
-import DoneAllRoundedIcon from "@mui/icons-material/DoneAllRounded";
+import InteractiveLandingChat from "./InteractiveLandingChat";
 import { ChatsContext } from "../../context/ChatContext";
 import { isUserAuthenticated } from "../../routes/ProtectedRoute";
 
@@ -182,7 +182,7 @@ function LandingMain() {
               </motion.div>
             </Grid>
 
-            {/* Right Clean Black & White Mockup */}
+            {/* Right Interactive Live Chat Mockup */}
             <Grid item xs={12} md={6}>
               <motion.div
                 initial={{ opacity: 0, scale: 0.98, y: 15 }}
@@ -190,164 +190,7 @@ function LandingMain() {
                 transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
                 style={{ width: "100%", display: "flex", justifyContent: "center" }}
               >
-                <Box
-                  sx={{
-                    width: "100%",
-                    maxWidth: "480px",
-                    borderRadius: "16px",
-                    background: "#0e0e11",
-                    border: "1px solid rgba(255, 255, 255, 0.12)",
-                    overflow: "hidden",
-                    position: "relative",
-                  }}
-                >
-                  {/* Mock Chat Header */}
-                  <Box
-                    sx={{
-                      padding: "16px 20px",
-                      borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      background: "rgba(255, 255, 255, 0.02)",
-                    }}
-                  >
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-                      <Box sx={{ position: "relative" }}>
-                        <Avatar
-                          sx={{
-                            width: 38,
-                            height: 38,
-                            bgcolor: "#ffffff",
-                            color: "#000000",
-                            fontSize: "0.95rem",
-                            fontWeight: 700,
-                          }}
-                        >
-                          E
-                        </Avatar>
-                        <Box
-                          sx={{
-                            position: "absolute",
-                            bottom: 0,
-                            right: 0,
-                            width: 9,
-                            height: 9,
-                            bgcolor: "#ffffff",
-                            borderRadius: "50%",
-                            border: "2px solid #000000",
-                          }}
-                        />
-                      </Box>
-                      <Box>
-                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: "#ffffff" }}>
-                          Elena Rostova
-                        </Typography>
-                        <Typography variant="caption" sx={{ color: "#a1a1aa", fontSize: "0.75rem" }}>
-                          Online
-                        </Typography>
-                      </Box>
-                    </Box>
-
-                    <Chip
-                      label="Direct"
-                      size="small"
-                      sx={{
-                        height: 22,
-                        fontSize: "0.7rem",
-                        bgcolor: "rgba(255, 255, 255, 0.08)",
-                        color: "#a1a1aa",
-                        border: "1px solid rgba(255, 255, 255, 0.1)",
-                      }}
-                    />
-                  </Box>
-
-                  {/* Mock Message Thread */}
-                  <Box sx={{ padding: "24px 20px", display: "flex", flexDirection: "column", gap: 2 }}>
-                    {/* Incoming Message */}
-                    <Box sx={{ display: "flex", gap: 1.2, alignItems: "flex-end" }}>
-                      <Avatar sx={{ width: 28, height: 28, bgcolor: "#27272a", color: "#ffffff", fontSize: "0.75rem" }}>E</Avatar>
-                      <Box
-                        sx={{
-                          maxWidth: "80%",
-                          padding: "10px 14px",
-                          borderRadius: "12px 12px 12px 3px",
-                          backgroundColor: "#27272a",
-                          border: "1px solid rgba(255, 255, 255, 0.08)",
-                          color: "#ffffff",
-                          fontSize: "0.9rem",
-                        }}
-                      >
-                        Hey! Did you check out the new Whispr experience?
-                      </Box>
-                    </Box>
-
-                    {/* Outgoing Message (Crisp White with Black Text) */}
-                    <Box sx={{ display: "flex", gap: 1.2, alignItems: "flex-end", alignSelf: "flex-end" }}>
-                      <Box
-                        sx={{
-                          maxWidth: "80%",
-                          padding: "10px 14px",
-                          borderRadius: "12px 12px 3px 12px",
-                          backgroundColor: "#ffffff",
-                          color: "#000000",
-                          fontSize: "0.9rem",
-                          fontWeight: 500,
-                        }}
-                      >
-                        Yes! Minimal black and white design &mdash; pure focus and clarity.
-                      </Box>
-                      <DoneAllRoundedIcon sx={{ fontSize: 16, color: "#ffffff", mb: 0.5 }} />
-                    </Box>
-
-                    {/* Incoming Message 2 */}
-                    <Box sx={{ display: "flex", gap: 1.2, alignItems: "flex-end" }}>
-                      <Avatar sx={{ width: 28, height: 28, bgcolor: "#27272a", color: "#ffffff", fontSize: "0.75rem" }}>E</Avatar>
-                      <Box
-                        sx={{
-                          maxWidth: "80%",
-                          padding: "10px 14px",
-                          borderRadius: "12px 12px 12px 3px",
-                          backgroundColor: "#27272a",
-                          border: "1px solid rgba(255, 255, 255, 0.08)",
-                          color: "#ffffff",
-                          fontSize: "0.9rem",
-                        }}
-                      >
-                        Sharp and sophisticated. Exactly what it needed.
-                      </Box>
-                    </Box>
-                  </Box>
-
-                  {/* Mock Input Bar */}
-                  <Box
-                    sx={{
-                      padding: "14px 20px",
-                      borderTop: "1px solid rgba(255, 255, 255, 0.08)",
-                      background: "rgba(255, 255, 255, 0.02)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Typography variant="body2" sx={{ color: "#71717a", fontSize: "0.875rem" }}>
-                      Type a message...
-                    </Typography>
-                    <Box
-                      sx={{
-                        width: 32,
-                        height: 32,
-                        borderRadius: "6px",
-                        backgroundColor: "#ffffff",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <ArrowForwardRoundedIcon sx={{ fontSize: 16, color: "#000000" }} />
-                    </Box>
-                  </Box>
-                </Box>
+                <InteractiveLandingChat />
               </motion.div>
             </Grid>
           </Grid>
