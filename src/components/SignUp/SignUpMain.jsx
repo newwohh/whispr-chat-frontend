@@ -12,7 +12,7 @@ import {
 import Background from "../Background/Background";
 import { motion } from "framer-motion";
 import { backendBaseUrl } from "../../constants/constants";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
+import { useNavigate, useLocation, Link as RouterLink } from "react-router-dom";
 import logo from "../../assets/diamond.png";
 import PersonOutlineRoundedIcon from "@mui/icons-material/PersonOutlineRounded";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
@@ -30,6 +30,7 @@ function SignUpMain() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
   const signupHandler = async (e) => {
     if (e) e.preventDefault();
@@ -71,7 +72,7 @@ function SignUpMain() {
       const response = await request.json();
 
       if (response && (response.message === "success" || response.msg === "success" || response.status === "success")) {
-        navigate("/login");
+        navigate("/login", { state: location.state });
       } else {
         const errorDetail =
           typeof response?.errors === "object"

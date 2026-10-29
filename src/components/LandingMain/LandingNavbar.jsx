@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import logo from "../../assets/diamond.png";
 import { Box, Button, Chip, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 import { Link as RouterLink } from "react-router-dom";
 import PublicIcon from "@mui/icons-material/Public";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { ChatsContext } from "../../context/ChatContext";
+import { isUserAuthenticated } from "../../routes/ProtectedRoute";
 
 function LandingNavbar() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { user } = useContext(ChatsContext);
+  const authenticated = isUserAuthenticated(user);
 
   return (
     <motion.header
@@ -96,40 +100,64 @@ function LandingNavbar() {
           World Chat
         </Button>
 
-        <Button
-          component={RouterLink}
-          to="/login"
-          variant="text"
-          sx={{
-            color: "#e4e4e7",
-            fontSize: "0.875rem",
-            fontWeight: 600,
-            padding: { xs: "6px 12px", sm: "8px 16px" },
-            "&:hover": { color: "#ffffff", backgroundColor: "rgba(255, 255, 255, 0.08)" },
-          }}
-        >
-          Sign In
-        </Button>
+        {authenticated ? (
+          <Button
+            component={RouterLink}
+            to="/chat"
+            variant="contained"
+            endIcon={<ArrowForwardIcon sx={{ fontSize: 16 }} />}
+            sx={{
+              fontSize: "0.875rem",
+              padding: { xs: "6px 14px", sm: "8px 18px" },
+              borderRadius: "8px",
+              backgroundColor: "#ffffff",
+              color: "#000000",
+              fontWeight: 700,
+              "&:hover": {
+                backgroundColor: "#e4e4e7",
+              },
+            }}
+          >
+            Open Web App
+          </Button>
+        ) : (
+          <>
+            <Button
+              component={RouterLink}
+              to="/login"
+              variant="text"
+              sx={{
+                color: "#e4e4e7",
+                fontSize: "0.875rem",
+                fontWeight: 600,
+                padding: { xs: "6px 12px", sm: "8px 16px" },
+                "&:hover": { color: "#ffffff", backgroundColor: "rgba(255, 255, 255, 0.08)" },
+              }}
+            >
+              Sign In
+            </Button>
 
-        <Button
-          component={RouterLink}
-          to="/signup"
-          variant="contained"
-          endIcon={<ArrowForwardIcon sx={{ fontSize: 16 }} />}
-          sx={{
-            fontSize: "0.875rem",
-            padding: { xs: "6px 14px", sm: "8px 18px" },
-            borderRadius: "8px",
-            backgroundColor: "#ffffff",
-            color: "#000000",
-            fontWeight: 700,
-            "&:hover": {
-              backgroundColor: "#e4e4e7",
-            },
-          }}
-        >
-          {isMobile ? "Join" : "Get Started"}
-        </Button>
+            <Button
+              component={RouterLink}
+              to="/signup"
+              variant="contained"
+              endIcon={<ArrowForwardIcon sx={{ fontSize: 16 }} />}
+              sx={{
+                fontSize: "0.875rem",
+                padding: { xs: "6px 14px", sm: "8px 18px" },
+                borderRadius: "8px",
+                backgroundColor: "#ffffff",
+                color: "#000000",
+                fontWeight: 700,
+                "&:hover": {
+                  backgroundColor: "#e4e4e7",
+                },
+              }}
+            >
+              {isMobile ? "Join" : "Get Started"}
+            </Button>
+          </>
+        )}
       </Box>
     </motion.header>
   );

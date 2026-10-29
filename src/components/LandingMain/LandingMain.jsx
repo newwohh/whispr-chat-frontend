@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Box,
   Button,
@@ -19,8 +19,12 @@ import BoltRoundedIcon from "@mui/icons-material/BoltRounded";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import PublicRoundedIcon from "@mui/icons-material/PublicRounded";
 import DoneAllRoundedIcon from "@mui/icons-material/DoneAllRounded";
+import { ChatsContext } from "../../context/ChatContext";
+import { isUserAuthenticated } from "../../routes/ProtectedRoute";
 
 function LandingMain() {
+  const { user } = useContext(ChatsContext);
+  const authenticated = isUserAuthenticated(user);
   return (
     <Box
       sx={{
@@ -119,7 +123,7 @@ function LandingMain() {
                 >
                   <Button
                     component={RouterLink}
-                    to="/signup"
+                    to={authenticated ? "/chat" : "/signup"}
                     variant="contained"
                     size="large"
                     endIcon={<ArrowForwardRoundedIcon />}
@@ -136,7 +140,7 @@ function LandingMain() {
                       },
                     }}
                   >
-                    Start Chatting Free
+                    {authenticated ? "Go to Messages" : "Start Chatting Free"}
                   </Button>
 
                   <Button

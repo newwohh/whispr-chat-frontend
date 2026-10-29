@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { motion } from "framer-motion";
 import Background from "../Background/Background";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
+import { useNavigate, useLocation, Link as RouterLink } from "react-router-dom";
 import { backendBaseUrl } from "../../constants/constants";
 import { setUserLocally } from "../../handlers/setLocalStorage";
 import { ChatsContext } from "../../context/ChatContext";
@@ -32,7 +32,10 @@ function LoginMain() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
   const { setUser } = useContext(ChatsContext);
+
+  const redirectTarget = location.state?.from?.pathname || "/chat";
 
   const loginHandler = async (e) => {
     if (e) e.preventDefault();
@@ -62,7 +65,7 @@ function LoginMain() {
       if (response && (response.msg === "login success" || response.message === "success" || response.token)) {
         setUserLocally(response);
         if (setUser) setUser(response);
-        navigate("/chat");
+        navigate(redirectTarget, { replace: true });
       } else {
         setErrorMsg(response?.msg || response?.message || "Invalid credentials. Please try again.");
       }
@@ -90,7 +93,7 @@ function LoginMain() {
     };
     setUserLocally(demoUser);
     if (setUser) setUser(demoUser);
-    navigate("/chat");
+    navigate(redirectTarget, { replace: true });
   };
 
   return (
@@ -304,7 +307,7 @@ function LoginMain() {
                     };
                     setUserLocally(googleUser);
                     if (setUser) setUser(googleUser);
-                    navigate("/chat");
+                    navigate(redirectTarget, { replace: true });
                   } catch (e) {
                     console.error("Google token decode failed:", e);
                   }

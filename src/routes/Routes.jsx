@@ -8,32 +8,21 @@ import { AnimatePresence } from "framer-motion";
 import { ChatsContext } from "../context/ChatContext";
 import { UserContext } from "../context/UserContext";
 import WorldChat from "../pages/WorldChat";
+import ProtectedRoute, { isUserAuthenticated } from "./ProtectedRoute";
 
 const getInitialUser = () => {
   try {
     const raw = localStorage.getItem("user");
     if (raw && raw !== "undefined" && raw !== "null") {
       const parsed = JSON.parse(raw);
-      if (parsed && typeof parsed === "object") {
+      if (parsed && typeof parsed === "object" && isUserAuthenticated(parsed)) {
         return parsed;
       }
     }
   } catch (err) {
     console.error("Failed to parse user from localStorage:", err);
   }
-  return {
-    user: {
-      name: "DemoUser",
-      id: "demo-user-1",
-      email: "demo@whispr.io",
-    },
-    users: [
-      { name: "Sarah Connor", id: "101" },
-      { name: "Alex Rivera", id: "102" },
-      { name: "Elena Rostova", id: "103" },
-      { name: "Marcus Vance", id: "104" },
-    ],
-  };
+  return null;
 };
 
 function Routes() {
@@ -60,7 +49,14 @@ function Routes() {
             <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/chat" element={<Chat />} />
+            <Route
+              path="/chat"
+              element={
+                <ProtectedRoute>
+                  <Chat />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/worldchat" element={<WorldChat />} />
           </Router>
         </ChatsContext.Provider>
